@@ -35,81 +35,43 @@
                     </svg>
                 </button>
             </div>
-            <nav class="mt-6 px-4">
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'dashboard'}" @click="activeLink = 'dashboard'"
-                    class="text-white font-size-200">
-                    {{ __('Dashboard') }}
-                </x-responsive-nav-link>
-                <hr class="opacity-35">
-                <p class="mt-4 ml-4 text-sm font-medium text-light text-gray-100 opacity-75">Master Mobil</p>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'merk'}" @click="activeLink = 'merk'"
-                    class="text-white">
-                    <i class="fa-solid fa-igloo"></i>
-                    {{ __('Data Merk') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'mobil'}" @click="activeLink = 'mobil'"
-                    class="text-white">
-                    {{ __('Data Mobil') }}
-                </x-responsive-nav-link>
-                <hr class=" opacity-35">
-                <p class="mt-4 ml-4 text-sm font-medium text-light text-gray-100 opacity-75">Master Pemesanan</p>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'pemesan'}" @click="activeLink = 'pemesan'"
-                    class="text-white">
-                    {{ __('Data Pemesan') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'jenis_bayar'}" @click="activeLink = 'jenis_bayar'"
-                    class="text-white">
-                    {{ __('Data Jenis Bayar') }}
-                </x-responsive-nav-link>
-                <hr class=" opacity-35">
-                <p class="mt-4 ml-4 text-sm font-medium text-light text-gray-100 opacity-75">Master Pesanan</p>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'pesanan'}" @click="activeLink = 'pesanan'"
-                    class="text-white">
-                    {{ __('Data Pesanan') }}
+        </div>
+    </div>
+
+    <!-- Responsive Navigation Menu -->
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <!-- Responsive Settings Options -->
+        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+            <div class="px-4">
+                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+            </div>
+
+            <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('profile.edit')">
+                    {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-            </nav>
-            <div class="mt-6 px-4">
-                <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
                     </x-responsive-nav-link>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-responsive-nav-link>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
-
-        <!-- Main Content -->
-        <div class="flex-1 flex flex-col bg-white">
-            <!-- Header -->
-            <header class="border-b border-gray-200 p-4 flex items-center justify-between shadow-sm bg-transparent">
-                <button @click="sidebarOpen = !sidebarOpen"
-                    class="inline-flex items-center p-2 rounded-md text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-700 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': sidebarOpen, 'inline-flex': !sidebarOpen }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                        </path>
-                        <path :class="{ 'hidden': !sidebarOpen, 'inline-flex': sidebarOpen }" class="hidden"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
-                    </svg>
-                </button>
-
-                <h1 class="text-lg font-bold">Dashboard</h1>
-            </header>
-
-            <!-- Main Content Area -->
-            <main class="flex-1 p-6">
-                {{ $slot }}
-            </main>
-        </div>
-    </nav>
+    </div>
+</nav>
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
 </body>
