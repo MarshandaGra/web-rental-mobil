@@ -67,6 +67,11 @@
                     class="text-white">
                     {{ __('Data Pesanan') }}
                 </x-responsive-nav-link>
+                <p class="mt-4 ml-4 text-sm font-medium text-light text-gray-100 opacity-75">Riwayat</p>
+                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'pesanan'}" @click="activeLink = 'pesanan'"
+                    class="text-white">
+                    {{ __('Riwayat Pesanan') }}
+                </x-responsive-nav-link>
 
             </nav>
             <div class="mt-6 px-4">
