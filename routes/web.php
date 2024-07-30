@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\BayarController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +38,7 @@ Route::middleware('auth')->group(function () {
 Route::resource('/bayar', App\Http\Controllers\BayarController::class);
 
 
-require __DIR__.'/auth.php';
+// ROUTE NEW
+Route::resource('merks', MerksController::class);
+
+require __DIR__ . '/auth.php';
