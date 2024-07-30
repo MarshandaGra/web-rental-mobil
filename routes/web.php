@@ -29,16 +29,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::get('/jenispembayaran', [App\Http\Controllers\BayarController::class, 'index'])->name('bayar.index');
-// Route::get('/jenispembayaran', [App\Http\Controllers\BayarController::class, 'create'])->name('bayar.create');
-// Route::post('/jenispembayaran', [App\Http\Controllers\BayarController::class, 'store'])->name('bayar.store');
 
 
 
-Route::resource('/bayar', App\Http\Controllers\BayarController::class);
 
+// ROUTE MERK
+Route::resource('merks', App\Http\Controllers\MerksController::class);
 
-// ROUTE NEW
-Route::resource('merks', MerksController::class);
+// ROUTE BAYAR
+Route::resource('bayar', App\Http\Controllers\BayarController::class);
+
+// ROUTE PEMESAN
+Route::resource('pemesan', App\Http\Controllers\PemesanController::class);
+
 
 require __DIR__ . '/auth.php';

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <nav x-data="{ open: false, sidebarOpen: false, activeLink: '' }" class="flex h-screen text-gray-900 bg-gray-100">
+    <nav x-data="{ open: false, sidebarOpen: false, activeLink: '' }" class="flex h-screen text-gray-900 bg-blue-500">
         <!-- Sidebar -->
         <div :class="{ 'block': sidebarOpen, 'hidden': !sidebarOpen }"
             class="fixed inset-0 bg-gray-800 bg-opacity-75 z-40 sm:hidden" @click="sidebarOpen = false"></div>
@@ -47,11 +47,11 @@
                 </x-responsive-nav-link>
                 <hr class=" opacity-35">
                 <p class="mt-4 ml-4 text-sm font-medium text-light text-gray-100 opacity-75">Master Pemesanan</p>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'pemesan'}" @click="activeLink = 'pemesan'"
+                <x-responsive-nav-link :href="route('pemesan.index')" :class="{'nav-link-active': activeLink === 'pemesan'}" @click="activeLink = 'pemesan'"
                     class="text-white">
                     {{ __('Data Pemesan') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'jenis_bayar'}" @click="activeLink = 'jenis_bayar'"
+                <x-responsive-nav-link :href="route('bayar.index')" :class="{'nav-link-active': activeLink === 'jenis_bayar'}" @click="activeLink = 'jenis_bayar'"
                     class="text-white">
                     {{ __('Data Jenis Bayar') }}
                 </x-responsive-nav-link>

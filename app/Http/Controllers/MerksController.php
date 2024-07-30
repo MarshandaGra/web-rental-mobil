@@ -34,7 +34,7 @@ class MerksController extends Controller
         ], [
             'merk.required' => 'merk harus di isi',
             'merk.unique' => 'merk sudah terdaftar',
-            'merk.max' => 'Texs Kategori maximal adalah 100'
+            'merk.max' => 'Teks Kategori maximal adalah 100'
         ]);
 
         Merk::create([
