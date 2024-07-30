@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\BayarController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Route::get('/jenispembayaran', [App\Http\Controllers\BayarController::class, 'index'])->name('bayar.index');
+// Route::get('/jenispembayaran', [App\Http\Controllers\BayarController::class, 'create'])->name('bayar.create');
+// Route::post('/jenispembayaran', [App\Http\Controllers\BayarController::class, 'store'])->name('bayar.store');
+
+
+
+Route::resource('/bayar', App\Http\Controllers\BayarController::class);
+
 
 require __DIR__.'/auth.php';

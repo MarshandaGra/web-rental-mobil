@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <nav x-data="{ open: false, sidebarOpen: false, activeLink: '' }" class="flex h-screen text-gray-900 bg-blue-500">
+    <nav x-data="{ open: false, sidebarOpen: false, activeLink: '' }" class="flex h-screen text-gray-900 bg-gray-100">
         <!-- Sidebar -->
         <div :class="{ 'block': sidebarOpen, 'hidden': !sidebarOpen }"
             class="fixed inset-0 bg-gray-800 bg-opacity-75 z-40 sm:hidden" @click="sidebarOpen = false"></div>
