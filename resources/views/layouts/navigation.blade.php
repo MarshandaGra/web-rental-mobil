@@ -8,12 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.2.4/dist/tailwind.min.css" rel="stylesheet">
 
     <style>
-        .nav-link-active {
-            background-color: transparent;
-            /* Menghapus latar belakang */
-            color: #ffffff;
-            /* Warna teks lebih cerah */
-        }
+
     </style>
 </head>
 
@@ -42,7 +37,7 @@
                 </x-responsive-nav-link>
                 <hr class="opacity-35">
                 <p class="mt-4 ml-4 text-sm font-medium text-light text-gray-100 opacity-75">Master Mobil</p>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'merk'}" @click="activeLink = 'merk'"
+                <x-responsive-nav-link :href="route('merks.index')" :class="{'nav-link-active': activeLink === 'merk'}" @click="activeLink = 'merk'"
                     class="text-white">
                     <i class="fa-solid fa-igloo"></i>
                     {{ __('Data Merk') }}
@@ -93,7 +88,7 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col bg-white">
             <!-- Header -->
-            <header class="border-b border-gray-200 p-4 flex items-center justify-between shadow-sm bg-transparent">
+            {{-- <header class="border-b border-gray-200 p-4 flex items-center justify-between shadow-sm bg-transparent">
                 <button @click="sidebarOpen = !sidebarOpen"
                     class="inline-flex items-center p-2 rounded-md text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-700 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -107,7 +102,7 @@
                 </button>
 
                 <h1 class="text-lg font-bold">Dashboard</h1>
-            </header>
+            </header> --}}
 
             <!-- Main Content Area -->
             <main class="flex-1 p-6">
