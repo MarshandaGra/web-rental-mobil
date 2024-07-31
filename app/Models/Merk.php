@@ -15,4 +15,10 @@ class Merk extends Model
     {
         return $this->hasMany(Mobil::class);
     }
+
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('nama_merk', 'like', '%' . $query . '%');
+    }
 }

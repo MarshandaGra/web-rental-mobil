@@ -38,10 +38,6 @@ Route::middleware('auth')->group(function () {
 // ROUTE NEW
 Route::resource('merks', MerksController::class);
 Route::resource('mobils', MobilsController::class);
-=======
-
-
-
 
 // ROUTE MERK
 Route::resource('merks', App\Http\Controllers\MerksController::class);

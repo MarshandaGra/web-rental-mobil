@@ -4,11 +4,8 @@
             {{ __('Data Pemesan') }}
         </h2>
     </x-slot>
-    <div class="container-fluid ">
-        <p class="h3">Form Edit Data Pemesan</p>
-    </div>
 
-    <div class="row mt-4">
+    <div class="row mt-3 ml-2">
         <div class="col-5">
             <!-- Header dengan warna biru -->
             <div class="mb-3">
@@ -64,6 +61,7 @@
                     @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{{ route('pemesan.index') }}" class="btn btn-warning ml-3">Kembali</a>
             </form>
 
         </div>

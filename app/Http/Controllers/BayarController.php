@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class BayarController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $bayar = Bayar::all();
-        return view('bayar.index', compact('bayar'));
+        $query = $request->input('query');
+        $bayar = Bayar::search($query)->paginate(5);
+        return view('bayar.index', compact('bayar', 'query'));
     }
 
     public function create()

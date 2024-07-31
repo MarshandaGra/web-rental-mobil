@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Storage;
 
 class PemesanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pemesan = Pemesan::all();
-        return view('pemesan.index', compact('pemesan'));
+        $search = $request->input('search');
+
+        $pemesan = Pemesan::when($search, function($query, $search) {
+            return $query->search($search);
+        })->paginate(5);
+
+        return view('pemesan.index', compact('pemesan', 'search'));
     }
 
     public function create()

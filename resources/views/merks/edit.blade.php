@@ -4,11 +4,8 @@
             {{ __('Data Merk') }}
         </h2>
     </x-slot>
-    <div class="container-fluid ">
-        <p class="h3">Form Edit Merk</p>
-    </div>
 
-    <div class="row mt-4">
+    <div class="row mt-3 ml-2">
         <div class="col-5">
             <!-- Header dengan warna biru -->
             <div class="mb-3">

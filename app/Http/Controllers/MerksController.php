@@ -10,10 +10,12 @@ class MerksController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $merks = Merk::all();
-        return view('merks.index', ['merks' => $merks]);
+    
+        $query = $request->input('query');
+        $merks = Merk::search($query)->paginate(5);
+        return view('merks.index', compact('merks', 'query'));
     }
 
     /**
