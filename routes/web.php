@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\MerksController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// ROUTE NEW
-Route::resource('merks', MerksController::class);
+
+
+
+
+// ROUTE MERK
+Route::resource('merks', App\Http\Controllers\MerksController::class);
+
+// ROUTE BAYAR
+Route::resource('bayar', App\Http\Controllers\BayarController::class);
+
+// ROUTE PEMESAN
+Route::resource('pemesan', App\Http\Controllers\PemesanController::class);
+
 
 require __DIR__ . '/auth.php';
