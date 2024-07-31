@@ -26,7 +26,7 @@ class PemesanController extends Controller
             'nama_pemesan'=> 'required',
             'alamat'=>'required',
             'no_hp'=>'required',
-            'image' => 'image|file|max:1024'
+            'image' => 'image|file|max:3000'
         ]);
 
         if($request->file('image')){
@@ -56,7 +56,7 @@ class PemesanController extends Controller
             'nama_pemesan'=> 'required',
             'alamat'=>'required',
             'no_hp'=>'required',
-            'image'=>'image|file|max:1024',
+            'image'=>'image|file|max:3000',
         ];
 
         $validatedData = $request->validate($rules);
