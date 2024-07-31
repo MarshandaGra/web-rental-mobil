@@ -5,23 +5,20 @@
         </h2>
     </x-slot>
     <div class="container-fluid mt-1">
-        <h1 class="h3">Data merk mobil</h1>
-        <ul class="list-group mt-3">
-            <li class="list-group-item list-group-item-dark text-secondary">Data Merk</li>
-        </ul>
         @if (session()->has('success'))
             <div class="alert alert-success mt-3" role="alert">
                 {{ session('success') }}
             </div>
         @endif
-        <div class="row mt-4">
-            <div class="col-4">
+        
+        <div class="row">
+            <div class="col-md-4">
                 <!-- Header dengan warna biru -->
-                <div class="mb-3">
+                <div class="mt-4">
                     <h4 class="bg-secondary text-white p-2 rounded">Tambah Data</h4>
                 </div>
                 <!-- Form dengan shadow -->
-                <form method="post" action="{{ route('merks.store') }}" class="shadow p-3 mb-5 bg-white rounded">
+                <form method="post" action="{{ route('merks.store') }}" class="shadow p-3 mb-5 bg-white rounded mt-3">
                     @csrf
                     <div class="mb-3">
                         <label for="merk" class="form-label">Nama Merk</label>
@@ -36,11 +33,17 @@
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </form>
             </div>
-            <div class="col-7">
-                <div class="mb-3">
+            <div class="col-md-8">
+                <div class="mt-4">
                     <h4 class="bg-secondary text-white p-2 rounded">Data Merk</h4>
                 </div>
-                <table class="table table-bordered ">
+                <table id="merkTable" class="table table-bordered ">
+                    <div class="mt-3 mb-3 col-7 d-flex justify-content-between align-items-center">
+                        <form method="GET" action="{{ route('merks.index') }}" class="d-flex">
+                                <input type="text" name="query" class="form-control rounded ml-2 shadow" placeholder="Cari Merek..." value="{{ request()->query('query') }}">
+                                <button class="btn btn-secondary ml-2 shadow" type="submit">Cari</button>
+                        </form>
+                    </div>
                     <thead>
                         <tr>
                             <th>No</th>
@@ -69,10 +72,21 @@
                             </tr>
                         @endforeach
                     </tbody>
-
                 </table>
+                <div class="mt-3">
+                    {{ $merks->withQueryString()->links() }}
+                </div>
             </div>
         </div>
-
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#merkTable').DataTable({
+                "language": {
+                    "search": "Cari:"
+                }
+            });
+        });
+    </script>
 </x-app-layout>

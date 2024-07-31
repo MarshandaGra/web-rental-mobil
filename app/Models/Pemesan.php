@@ -16,4 +16,11 @@ class Pemesan extends Model
         'no_hp',
         'image',
     ];
+    
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('nama_pemesan', 'like', '%' . $search . '%')
+                    ->orWhere('alamat', 'like', '%' . $search . '%')
+                    ->orWhere('no_hp', 'like', '%' . $search . '%');
+    }
 }

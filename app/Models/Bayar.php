@@ -13,4 +13,10 @@ class Bayar extends Model
     protected $fillable = [
         'jenis_bayar'
     ];
+
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('jenis_bayar', 'like', '%' . $query . '%');
+    }
 }
