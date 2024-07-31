@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_pemesan');
             $table->string('alamat');
-            $table->integer('no_hp');
+            $table->string('no_hp');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

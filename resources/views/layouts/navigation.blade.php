@@ -47,11 +47,11 @@
                 </x-responsive-nav-link>
                 <hr class=" opacity-35">
                 <p class="mt-4 ml-4 text-sm font-medium text-light text-gray-100 opacity-75">Master Pemesanan</p>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'pemesan'}" @click="activeLink = 'pemesan'"
+                <x-responsive-nav-link :href="route('pemesan.index')" :class="{'nav-link-active': activeLink === 'pemesan'}" @click="activeLink = 'pemesan'"
                     class="text-white">
                     {{ __('Data Pemesan') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'jenis_bayar'}" @click="activeLink = 'jenis_bayar'"
+                <x-responsive-nav-link :href="route('bayar.index')" :class="{'nav-link-active': activeLink === 'jenis_bayar'}" @click="activeLink = 'jenis_bayar'"
                     class="text-white">
                     {{ __('Data Jenis Bayar') }}
                 </x-responsive-nav-link>
