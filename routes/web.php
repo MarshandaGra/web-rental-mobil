@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MerksController;
+use App\Http\Controllers\MobilsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,5 +32,6 @@ Route::middleware('auth')->group(function () {
 
 // ROUTE NEW
 Route::resource('merks', MerksController::class);
+Route::resource('mobils', MobilsController::class);
 
 require __DIR__ . '/auth.php';

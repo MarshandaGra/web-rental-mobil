@@ -42,7 +42,7 @@
                     <i class="fa-solid fa-igloo"></i>
                     {{ __('Data Merk') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('dashboard')" :class="{'nav-link-active': activeLink === 'mobil'}" @click="activeLink = 'mobil'"
+                <x-responsive-nav-link :href="route('mobils.index')" :class="{'nav-link-active': activeLink === 'mobil'}" @click="activeLink = 'mobil'"
                     class="text-white">
                     {{ __('Data Mobil') }}
                 </x-responsive-nav-link>

@@ -30,6 +30,7 @@
                     @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{{ route('merks.index') }}" class="btn btn-warning ml-3">Kembali</a>
             </form>
 
         </div>

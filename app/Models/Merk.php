@@ -10,4 +10,9 @@ class Merk extends Model
     use HasFactory;
     protected $table = 'merks';
     protected $fillable = ['nama_merk'];
+
+    public function mobil()
+    {
+        return $this->hasMany(Mobil::class);
+    }
 }
