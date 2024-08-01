@@ -15,4 +15,8 @@ class Mobil extends Model
     {
         return $this->belongsTo(Merk::class);
     }
+    public function pesanan()
+    {
+        return $this->belongsTo(Pesanan::class);
+    }
 }

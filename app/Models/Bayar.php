@@ -13,4 +13,9 @@ class Bayar extends Model
     protected $fillable = [
         'jenis_bayar'
     ];
+
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class);
+    }
 }

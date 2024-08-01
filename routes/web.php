@@ -3,8 +3,10 @@
 
 use App\Http\Controllers\MerksController;
 use App\Http\Controllers\MobilsController;
-
-
+use App\Http\Controllers\PemesanController;
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\PesanannController;
+use App\Http\Controllers\PesanansController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +40,8 @@ Route::middleware('auth')->group(function () {
 // ROUTE NEW
 Route::resource('merks', MerksController::class);
 Route::resource('mobils', MobilsController::class);
-=======
+Route::resource('pemesans', PemesanController::class);
+Route::resource('pesanan', PesanannController::class);
 
 
 
@@ -49,8 +52,7 @@ Route::resource('merks', App\Http\Controllers\MerksController::class);
 // ROUTE BAYAR
 Route::resource('bayar', App\Http\Controllers\BayarController::class);
 
-// ROUTE PEMESAN
-Route::resource('pemesan', App\Http\Controllers\PemesanController::class);
+
 
 
 
