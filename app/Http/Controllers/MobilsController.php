@@ -12,11 +12,15 @@ class MobilsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $mobil = Mobil::all();
-        $merk = Merk::all();
-        return view('mobils.index', ['mobil' => $mobil], compact('merk'));
+        $search = $request->input('search');
+
+        $mobil = Mobil::when($search, function($query, $search) {
+            return $query->search($search);
+        })->paginate(5);
+
+        return view('mobils.index', compact('mobil', 'search'));
     }
 
     /**
