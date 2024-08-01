@@ -14,9 +14,8 @@ class Bayar extends Model
         'jenis_bayar'
     ];
 
-    public static function search($query)
+    public function pesanan()
     {
-        return empty($query) ? static::query()
-            : static::where('jenis_bayar', 'like', '%' . $query . '%');
+        return $this->hasMany(Pesanan::class);
     }
 }

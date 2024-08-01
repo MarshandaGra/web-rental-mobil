@@ -10,17 +10,10 @@ class Pemesan extends Model
     use HasFactory;
     protected $table = 'pemesans';
 
-    protected $fillable = [
-        'nama_pemesan',
-        'alamat',
-        'no_hp',
-        'image',
-    ];
-    
-    public function scopeSearch($query, $search)
+    protected $fillable = ['nama_pemesan', 'alamat', 'no_hp', 'alamat', 'image'];
+
+    public function pesanan()
     {
-        return $query->where('nama_pemesan', 'like', '%' . $search . '%')
-                    ->orWhere('alamat', 'like', '%' . $search . '%')
-                    ->orWhere('no_hp', 'like', '%' . $search . '%');
+        return $this->hasMany(Pesanan::class);
     }
 }
