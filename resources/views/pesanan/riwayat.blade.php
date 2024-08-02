@@ -1,16 +1,17 @@
 <x-app-layout class="d-flex">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60">
-            {{ __('Data Riwayat Peminjaman') }}
+            {{ __('Data Pengembalian') }}
         </h2>
     </x-slot>
 
     <div class="flex">
-        <div class="flex-1 ml-60 p-3">
+        <div class="flex-1 ml-64 p-4">
             <main class="container mx-auto">
-
-                <div class="row mb-3">
-
+                <div class="mb-1">
+                    <h4 class="bg-secondary text-white p-2 rounded">Data Pengembalian</h4>
+                </div>
+                <div class="row mb-1 mt-1">
                     <table class="table table-bordered mt-4">
                         <thead>
                             <tr>

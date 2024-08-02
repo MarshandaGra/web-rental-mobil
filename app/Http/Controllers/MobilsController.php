@@ -190,7 +190,7 @@ class MobilsController extends Controller
             // Hapus mobil
             $mobil->delete();
 
-            return redirect()->route('mobils.index')->with('success', 'Data Mobil berhasil dihapus');
+            return redirect()->route('mobils.index')->with('danger', 'Data Mobil berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $ex) {
             // Menangkap kesalahan foreign key dan menampilkan pesan yang ramah pengguna
             return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menghapus mobil. Pastikan tidak ada pesanan yang terkait.']);

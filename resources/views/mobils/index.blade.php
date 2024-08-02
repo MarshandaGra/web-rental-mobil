@@ -146,7 +146,7 @@
                         <form method="GET" action="{{ route('mobils.index') }}">
                             <div class="input-group mb-3">
                                 <input type="text" name="search" class="form-control mr-2 rounded shadow"
-                                    placeholder="Cari Pemesan..." value="{{ $search }}">
+                                    placeholder="Cari Mobil..." value="{{ $search }}">
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
@@ -190,7 +190,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger"
-                                                    onclick="return confirm('Apakah anda yakin inggin menghapus data ini')">Hapus</button>
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini')">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>

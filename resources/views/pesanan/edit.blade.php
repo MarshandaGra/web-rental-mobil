@@ -1,7 +1,7 @@
 <x-app-layout class="d-flex">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
-            {{ __('Data Mobil') }}
+            {{ __('Data Penyewaan - ').$pesanan->pemesan->nama_pemesan }}
         </h2>
     </x-slot>
 

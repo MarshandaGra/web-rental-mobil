@@ -119,6 +119,6 @@ class PesanannController extends Controller
     public function destroy(Pesanan $pesanan)
     {
         $pesanan->delete();
-        return redirect()->route('pesanan.index')->with('success', 'Penyewa berhasil dihapus');
+        return redirect()->route('pesanan.index')->with('danger', 'Penyewa berhasil dihapus');
     }
 }

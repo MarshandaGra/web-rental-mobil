@@ -1,20 +1,33 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60">
-            {{ __('Data Penyewa') }}
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
+            {{ __('Data Penyewaan') }}
         </h2>
     </x-slot>
 
     <div class="flex">
         <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-
+                
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
-
+                @if (session()->has('danger'))
+                    <div class="alert alert-danger mt-3" role="alert">
+                        {{ session('danger') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <div class="row mt-4">
                     <div class="col-7">
                         <!-- Header dengan warna biru -->
@@ -159,11 +172,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $pesanan->appends(['search' => $search])->links() }}
                     </div>
                 </div>
-
-
-
             </main>
         </div>
     </div>

@@ -10,14 +10,16 @@
     <div class="flex">
         <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-
-
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
-
+                @if (session()->has('danger'))
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{ session('danger') }}
+                </div>
+            @endif
                 @if ($errors->any())
                     <div class="alert alert-danger mt-3">
                         <ul>
@@ -98,41 +100,30 @@
                         <form method="GET" action="{{ route('pemesans.index') }}">
                             <div class="input-group mb-3">
                                 <input type="text" name="search" class="form-control mr-2 rounded shadow"
-                                    placeholder="Cari Pemesan ..." value="{{ $search }}">
+                                    placeholder="Cari Pemesan..." value="{{ $search }}">
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>Nama Pemesan</th>
                                     <th>Alamat</th>
                                     <th>Nomor HP</th>
-                                    <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($pemesan as $data)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data->nama_pemesan }}</td>
                                         <td>{{ $data->alamat }}</td>
                                         <td>{{ $data->no_hp }}</td>
                                         <td>
-                                            @if ($data->image)
-                                                <img src="{{ Storage::url('images/' . $data->image) }}"
-                                                    style="width: 50px;">
-                                            @else
-                                                Tidak ada gambar
-                                            @endif
-                                        </td>
-                                        <td>
                                             <a href="{{ route('pemesans.edit', $data->id) }}"
                                                 class="btn btn-warning">Edit</a>
                                             <a href="{{ route('pemesans.show', $data->id) }}"
-                                                class="btn btn-secondary">Detail</a>
+                                                class="btn btn-info">Detail</a>
                                             <form action="{{ route('pemesans.destroy', $data->id) }}" method="POST"
                                                 style="display: inline;">
                                                 @csrf
@@ -147,6 +138,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $pemesan->appends(['search' => $search])->links() }}
                     </div>
                 </div>
             </main>

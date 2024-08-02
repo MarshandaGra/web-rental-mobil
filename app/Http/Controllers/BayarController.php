@@ -10,12 +10,14 @@ class BayarController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-
-        $bayar = Bayar::when($search, function ($query, $search) {
-            return $query->search($search);
-        })->paginate(4);
-
-        return view('bayar.index', compact('bayar', 'search', 'bayar'));
+    
+        $bayar = Bayar::when($search, function($query, $search) {
+            return $query->where('jenis_bayar', 'like', '%' . $search . '%');
+        })
+        ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+        ->paginate(4);
+        
+        return view('bayar.index', compact('bayar', 'search'));
     }
 
     public function create()
@@ -65,6 +67,6 @@ class BayarController extends Controller
         $bayar->delete();
 
         return redirect()->route('bayar.index')
-            ->with('success', 'Jenis pembayaran berhasil dihapus');
+            ->with('danger', 'Jenis pembayaran berhasil dihapus');
     }
 }
