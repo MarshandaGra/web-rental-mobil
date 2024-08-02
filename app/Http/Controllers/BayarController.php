@@ -9,9 +9,8 @@ class BayarController extends Controller
 {
     public function index(Request $request)
     {
-        $query = $request->input('query');
-        $bayar = Bayar::search($query)->paginate(5);
-        return view('bayar.index', compact('bayar', 'query'));
+        $bayar = Bayar::all();
+        return view('bayar.index', compact('bayar'));
     }
 
     public function create()
@@ -31,7 +30,7 @@ class BayarController extends Controller
         return redirect()->route('bayar.index')->with('success', 'Jenis pembayaran berhasil dibuat.');
     }
 
-    public function edit( $id)
+    public function edit($id)
     {
         $bayar = Bayar::findOrFail($id);
         return view('bayar.edit', compact('bayar'));
@@ -52,9 +51,15 @@ class BayarController extends Controller
     public function destroy($id)
     {
         $bayar = Bayar::findOrFail($id);
+
+
+        if ($bayar->pesanan()->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Data ini sedang digunakan dan tidak bisa dihapus.']);
+        }
+
         $bayar->delete();
 
         return redirect()->route('bayar.index')
-                        ->with('danger', 'Jenis pembayaran berhasil dihapus');
+            ->with('success', 'Jenis pembayaran berhasil dihapus');
     }
 }

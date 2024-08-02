@@ -24,6 +24,16 @@
                     </div>
                 @endif
 
+                @if ($errors->any())
+                    <div class="alert alert-danger mt-3">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="row mt-4">
                     <div class="col-5">
                         <div class="mb-3">
@@ -173,7 +183,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger"
-                                                    onclick="return confirm('Apakah anda yakin inggin menghapus merk ini')">Hapus</button>
+                                                    onclick="return confirm('Apakah anda yakin inggin menghapus data ini')">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>

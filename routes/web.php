@@ -41,13 +41,22 @@ Route::middleware('auth')->group(function () {
 Route::resource('merks', MerksController::class);
 Route::resource('mobils', MobilsController::class);
 Route::resource('pemesans', PemesanController::class);
+
+// PESANAN
 Route::resource('pesanan', PesanannController::class);
+// route pengembalian
+Route::post('pesanan/{id}/kembali', [PesanannController::class, 'kembali'])->name('pesanan.kembali');
+Route::get('pesanan{id}/kembali', [PesanannController::class, 'formDenda'])->name('pesanan.kembali.form');
+Route::get('/riwayat', [PesanannController::class, 'riwayat'])->name('penyewaan.riwayat');
 
 
 
 
-// ROUTE MERK
-Route::resource('merks', App\Http\Controllers\MerksController::class);
+
+
+
+// // ROUTE MERK
+// Route::resource('merks', App\Http\Controllers\MerksController::class);
 
 // ROUTE BAYAR
 Route::resource('bayar', App\Http\Controllers\BayarController::class);

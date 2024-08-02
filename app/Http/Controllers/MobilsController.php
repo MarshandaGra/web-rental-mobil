@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Merk;
 use App\Models\Mobil;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,13 +15,16 @@ class MobilsController extends Controller
      */
     public function index(Request $request)
     {
+        $mobil = Mobil::all();
+        $merk = Merk::all();
+
         $search = $request->input('search');
 
-        $mobil = Mobil::when($search, function($query, $search) {
+        $mobil = Mobil::when($search, function ($query, $search) {
             return $query->search($search);
         })->paginate(5);
 
-        return view('mobils.index', compact('mobil', 'search'));
+        return view('mobils.index', compact('mobil', 'search', 'merk'));
     }
 
     /**
@@ -36,7 +40,7 @@ class MobilsController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'mobil' => 'required|unique:mobils,nama_m|max:255',
+            'mobil' => 'required|unique:mobils,nama_m|max:255|',
             'merk' => 'required',
             'kursi' => 'required|max:5',
             'npolisi' => 'required|unique:mobils,nomor_polisi|max:100',
@@ -172,14 +176,24 @@ class MobilsController extends Controller
     public function destroy(Mobil $mobil)
     {
 
-        // Jika ada gambar, hapus gambar dari storage
-        if ($mobil->gambar) {
-            Storage::delete('public/images/' . $mobil->gambar);
+        try {
+            // Cek apakah mobil sedang/akan disewa
+            if ($mobil->pesanan()->exists()) {
+                return redirect()->back()->withErrors(['error' => 'Mobil ini sedang/akan disewa dan tidak bisa dihapus.']);
+            }
+
+            // Jika tidak digunakan hapus gambar dari storage (jika ada)
+            if ($mobil->gambar) {
+                Storage::delete('public/images/' . $mobil->gambar);
+            }
+
+            // Hapus mobil
+            $mobil->delete();
+
+            return redirect()->route('mobils.index')->with('success', 'Data Mobil berhasil dihapus');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            // Menangkap kesalahan foreign key dan menampilkan pesan yang ramah pengguna
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menghapus mobil. Pastikan tidak ada pesanan yang terkait.']);
         }
-
-        // Hapus data mobil dari database
-        $mobil->delete();
-
-        return redirect()->route('mobils.index')->with('success', 'Mobil berhasil dihapus');
     }
 }
