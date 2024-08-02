@@ -9,9 +9,15 @@ class BayarController extends Controller
 {
     public function index(Request $request)
     {
-        $query = $request->input('query');
-        $bayar = Bayar::search($query)->paginate(5);
-        return view('bayar.index', compact('bayar', 'query'));
+        $search = $request->input('search');
+    
+    $bayar = Bayar::when($search, function($query, $search) {
+        return $query->where('jenis_bayar', 'like', '%' . $search . '%');
+    })
+    ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+    ->paginate(4);
+    
+    return view('bayar.index', compact('bayar', 'search'));
     }
 
     public function create()

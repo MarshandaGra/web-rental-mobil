@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-[#3ca0f2] text-white w-64 h-screen fixed">
+<nav x-data="{ open: false }" class="bg-[#3ca0f2] text-white w-55 h-screen fixed">
     <div class="p-4">
         <div class="shrink-0 flex items-center">
             <a href="{{ route('dashboard') }}">

@@ -1,24 +1,25 @@
 <x-app-layout class="d-flex">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight  ml-60 px-2">
             {{ __('Data Merk') }}
         </h2>
     </x-slot>
 
 
     <div class="flex">
-        <div class="flex-1 ml-64 p-4">
+        <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                <h1 class="h3">Data merk mobil</h1>
-                <ul class="list-group mt-3">
-                    <li class="list-group-item list-group-item-dark text-secondary">Data Merk</li>
-                </ul>
+                
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
-
+                @if (session()->has('danger'))
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{ session('danger') }}
+                </div>
+                @endif
                 <div class="row mt-4">
                     <div class="col-4">
                         <!-- Header dengan warna biru -->
@@ -47,10 +48,15 @@
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Merk</h4>
                         </div>
-                        <table class="table table-bordered ">
+                        <form method="GET" action="{{ route('merks.index') }}">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control mr-2 rounded shadow" name="search" placeholder="Cari Merk..." value="{{ request()->query('search') }}">
+                                <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
+                            </div>
+                        </form>
+                        <table class="table table-bordered shadow">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>Merk</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -58,7 +64,6 @@
                             <tbody>
                                 @foreach ($merks as $data)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data->nama_merk }}</td>
                                         <td>
                                             <a href="{{ route('merks.edit', $data->id) }}"
@@ -77,18 +82,13 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-
                         </table>
+                            {{ $merks->appends(request()->input())->links() }}
                     </div>
                 </div>
             </main>
         </div>
     </div>
-
-
-
-
-
-
     </div>
+    
 </x-app-layout>

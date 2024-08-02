@@ -14,13 +14,24 @@ class MobilsController extends Controller
      */
     public function index(Request $request)
     {
+
         $search = $request->input('search');
 
-        $mobil = Mobil::when($search, function($query, $search) {
-            return $query->search($search);
-        })->paginate(5);
+    $mobil = Mobil::when($search, function ($query, $search) {
+        return $query->where('nama_m', 'like', '%' . $search . '%')
+            ->orWhere('kursi', 'like', '%' . $search . '%')
+            ->orWhere('nomor_polisi', 'like', '%' . $search . '%')
+            ->orWhere('tahun', 'like', '%' . $search . '%')
+            ->orWhere('harga_per_hari', 'like', '%' . $search . '%')
+            ->orWhereHas('merk', function ($query) use ($search) {
+                $query->where('nama_merk', 'like', '%' . $search . '%');
+            });
+    })->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+    ->paginate(4);
 
-        return view('mobils.index', compact('mobil', 'search'));
+    $merk = Merk::all();
+
+    return view('mobils.index', compact('mobil', 'search', 'merk'));
     }
 
     /**
@@ -180,6 +191,6 @@ class MobilsController extends Controller
         // Hapus data mobil dari database
         $mobil->delete();
 
-        return redirect()->route('mobils.index')->with('success', 'Mobil berhasil dihapus');
+        return redirect()->route('mobils.index')->with('danger', 'Mobil berhasil dihapus');
     }
 }

@@ -5,27 +5,29 @@
         }
     </style>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Data Merk') }}
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
+            {{ __('Data Mobil') }}
         </h2>
     </x-slot>
 
 
     <div class="flex">
-        <div class="flex-1 ml-64 p-4">
+        <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                <p class="h3">Data Mobil Rental</p>
-                <ul class="list-group mt-3">
-                    <li class="list-group-item list-group-item-dark text-secondary">Data Mobil Rental</li>
-                </ul>
+                
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
+                @if (session()->has('danger'))
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{ session('danger') }}
+                </div>
+                @endif
 
                 <div class="row mt-4">
-                    <div class="col-5">
+                    <div class="col-4">
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Tambah Data</h4>
                         </div>
@@ -112,7 +114,7 @@
                             <!-- Preview Image -->
                             <div class="mb-3">
                                 <img id="imagePreview" src="" alt="Preview Gambar"
-                                    style="display: none; width: 50px;">
+                                style="display: none; width: 100px; height: auto;">
                             </div>
                             <div class="mb-3">
                                 <label for="gambar" class="form-label">Gambar Mobil</label>
@@ -131,10 +133,15 @@
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Mobil</h4>
                         </div>
-                        <table class="table table-bordered">
+                        <form method="GET" action="{{ route('mobils.index') }}">
+                            <div class="input-group mb-3">
+                                <input type="text" name="search" class="form-control mr-2 rounded shadow" placeholder="Cari Pemesan..." value="{{ $search }}">
+                                <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
+                            </div>
+                        </form>
+                        <table class="table table-bordered shadow">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>Mobil</th>
                                     <th>Merk</th>
                                     <th>Kursi</th>
@@ -148,7 +155,6 @@
                             <tbody>
                                 @foreach ($mobil as $data)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data->nama_m }}</td>
                                         <td>{{ $data->merk->nama_merk }}</td>
                                         <td>{{ $data->kursi }}</td>
@@ -180,6 +186,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $mobil->appends(['search' => $search])->links() }}
                     </div>
                 </div>
             </main>
