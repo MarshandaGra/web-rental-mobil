@@ -17,15 +17,32 @@ class PesanannController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $pemesan = Pemesan::all();
-        $mobil = Mobil::all();
-        $bayar = Bayar::all();
-        $pesanan = Pesanan::with('pemesan', 'mobil', 'bayar')->get();
-        return view('pesanan.index', compact('pesanan', 'pemesan', 'mobil', 'bayar'));
-    }
+    
+        public function index(Request $request)
+        {
+            $search = $request->input('search');
 
+            $pesanan = Pesanan::with('pemesan', 'mobil', 'bayar')
+                ->when($search, function($query, $search) {
+                    return $query->whereHas('pemesan', function($q) use ($search) {
+                            $q->where('nama_pemesan', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('mobil', function($q) use ($search) {
+                            $q->where('nama_m', 'like', '%' . $search . '%');
+                        })
+                        ->orWhereHas('bayar', function($q) use ($search) {
+                            $q->where('jenis_bayar', 'like', '%' . $search . '%');
+                        });
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);
+
+                $pemesan = Pemesan::all();
+                $mobil = Mobil::all();
+                $bayar = Bayar::all();
+                
+                return view('pesanan.index', compact('pesanan', 'pemesan', 'mobil', 'bayar', 'search'));
+        }
     /**
      * Show the form for creating a new resource.
      */

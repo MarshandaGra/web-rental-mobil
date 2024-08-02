@@ -8,10 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class PemesanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pemesan = Pemesan::all();
-        return view('pemesan.index', compact('pemesan'));
+        $search = $request->input('search');
+    
+    $pemesan = Pemesan::when($search, function($query, $search) {
+        return $query->where('nama_pemesan', 'like', '%' . $search . '%')
+                    ->orWhere('alamat', 'like', '%' . $search . '%')
+                    ->orWhere('no_hp', 'like', '%' . $search . '%');
+    })
+    ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+    ->paginate(4);
+    
+    return view('pemesan.index', compact('pemesan', 'search'));
     }
 
     public function create()

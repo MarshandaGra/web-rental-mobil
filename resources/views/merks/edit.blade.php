@@ -1,17 +1,16 @@
 <x-app-layout class="d-flex">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
             {{ __('Data Merk') }}
         </h2>
     </x-slot>
 
     <div class="flex">
-        <div class="flex-1 ml-64 p-4">
+        <div class="flex-1  ml-60 p-3">
             <main class="container mx-auto">
-                <p class="h3">Form Edit Merk</p>
-
+    
                 <div class="row mt-4">
-                    <div class="col-5">
+                    <div class="col-8">
                         <!-- Header dengan warna biru -->
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Edit Data</h4>
@@ -33,7 +32,7 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('merks.index') }}" class="btn btn-warning ml-3">Kembali</a>
+                            <a href="{{ route('merks.index') }}" class="btn btn-secondary ml-3">Kembali</a>
                         </form>
 
                     </div>

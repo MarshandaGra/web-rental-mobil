@@ -1,21 +1,19 @@
 <x-app-layout class="d-flex">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
             {{ __('Data Mobil') }}
         </h2>
     </x-slot>
 
 
     <div class="flex">
-        <div class="flex-1 ml-64 p-4">
+        <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                <p class="h3">Form Edit Mobil</p>
-            </main>
-
+            
             <div class="row mt-4">
-                <div class="col-6">
+                <div class="col-8">
                     <div class="mb-3">
-                        <h4 class="bg-secondary text-white p-2 rounded">Tambah Data</h4>
+                        <h4 class="bg-secondary text-white p-2 rounded">Edit Data</h4>
                     </div>
                     <form method="post" action="{{ route('mobils.update', $mobil->id) }}" enctype="multipart/form-data"
                         class="shadow p-3 mb-5 bg-white rounded">
@@ -101,9 +99,9 @@
                         <!-- Preview Image -->
                         <div class="mb-3">
                             <img id="imagePreview"
-                                src="{{ $mobil->gambar ? Storage::url('images/' . $mobil->gambar) : '' }}"
+                                src="{{ asset('storage/public/images/' . $mobil->gambar) }}" 
                                 alt="Preview Gambar"
-                                style="display: {{ $mobil->gambar ? 'block' : 'none' }}; width: 50px;">
+                                style="display: {{ $mobil->gambar ? 'block' : 'none' }}; width: 200px;">
                         </div>
                         <div class="mb-3">
                             <label for="gambar" class="form-label">Gambar Mobil</label>
@@ -119,7 +117,31 @@
                     </form>
                 </div>
             </div>
+        </main>
         </div>
     </div>
 
+    <script>
+        function previewImage() {
+            const fileInput = document.getElementById('gambar');
+            const preview = document.getElementById('imagePreview');
+
+            // Menghapus preview gambar sebelumnya
+            preview.style.display = 'none';
+
+            // Cek apakah ada file yang dipilih
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Set src gambar preview dan tampilkan
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+
+                // Membaca file
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    </script>
 </x-app-layout>

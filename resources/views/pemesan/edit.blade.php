@@ -1,24 +1,22 @@
-<x-app-layout>
+<x-app-layout class="d-flex">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
             {{ __('Data Pemesan') }}
         </h2>
     </x-slot>
 
     <div class="flex">
-        <div class="flex-1 ml-64 p-4">
+        <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                <p class="h3">Form Edit Data Pemesan</p>
-
+            
                 <div class="row mt-4">
-                    <div class="col-5">
+                    <div class="col-8">
                         <!-- Header dengan warna biru -->
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Edit Data</h4>
                         </div>
                         <!-- Form dengan shadow -->
-                        <form method="POST" action="{{ route('pemesans.update', $pemesan->id) }}"
-                            class="shadow p-3 mb-5 bg-white rounded" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('pemesans.update', $pemesan->id) }}" class="shadow p-3 mb-5 bg-white rounded" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
@@ -56,16 +54,21 @@
                             </div>
                             <div class="mb-3">
                                 <img id="imagePreview"
-                                    src="{{ $pemesan->image ? Storage::url('images/' . $pemesan->image) : '' }}"
-                                    alt="Preview image"
-                                    style="display: {{ $pemesan->image ? 'block' : 'none' }}; width: 100px;">
-                            </div>
+                                    src="{{ asset('storage/public/images/' . $pemesan->image) }}" 
+                                    alt="Preview Image"
+                                    style="display: {{ $pemesan->image ? 'block' : 'none' }}; width: 200px;">
+                            </div>                           
                             <div class="mb-3">
-                                <label for="gambar" class="form-label">Gambar Pemesan</label>
-                                <input type="file" name="gambar" id="gambar" class="form-control"
-                                    onchange="previewImage()">
+                                <label for="image" class="form-label">Gambar Pemesan</label>
+                                <input type="file" name="image" onchange="previewImage()"
+                                value="{{ old('gambar', $pemesan->image) }}"
+                                class="form-control @error('image') is-invalid @enderror" id="image">
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
+                            <a href="{{ route('pemesans.index') }}" class="btn btn-secondary ml-3">Kembali</a>
                         </form>
                     </div>
                 </div>
@@ -76,21 +79,30 @@
 
     <script>
         function previewImage() {
-            const fileInput = document.getElementById('gambar');
-            const imagePreview = document.getElementById('imagePreview');
+            const fileInput = document.getElementById('image');
+            const preview = document.getElementById('imagePreview');
 
+            // Menghapus preview gambar sebelumnya
+            preview.style.display = 'none';
+
+            // Cek apakah ada file yang dipilih
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
+                    // Set src gambar preview dan tampilkan
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
                 };
 
+                // Membaca file
                 reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                imagePreview.style.display = 'none';
             }
         }
     </script>
 </x-app-layout>
+
+
+
+
+
