@@ -12,7 +12,7 @@ class MerksController extends Controller
      */
     public function index(Request $request)
     {
-    
+
         $query = $request->input('query');
         $merks = Merk::search($query)->paginate(5);
         return view('merks.index', compact('merks', 'query'));
@@ -88,6 +88,13 @@ class MerksController extends Controller
      */
     public function destroy(Merk $merk)
     {
+
+        // cek apakah kategori sedang digunakan oleh mobil
+        if ($merk->mobil()->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Merk ini sedang digunakan di data mobil dan tidak bisa dihapus.']);
+        }
+
+        // jika tidak digunakan hapus kategori
         $merk->delete();
         return redirect()->route('merks.index')->with('success', 'Merk berhasil dihapus');
     }

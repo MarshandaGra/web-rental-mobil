@@ -19,7 +19,7 @@
                 @endif
 
                 <div class="row mt-4">
-                    <div class="col-4">
+                    <div class="col-7">
                         <!-- Header dengan warna biru -->
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Tambah Data</h4>
@@ -108,7 +108,7 @@
                             <button type="submit" class="btn btn-primary">Tambah</button>
                         </form>
                     </div>
-                    <div class="col-8">
+                    <div class="row">
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Penyewa</h4>
                         </div>
@@ -121,6 +121,7 @@
                                     <th>Jenis Bayar</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Kembali</th>
+                                    <th>Total Bayar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -133,9 +134,14 @@
                                         <td>{{ $data->bayar->jenis_bayar }}</td>
                                         <td>{{ $data->tanggal_mulai }}</td>
                                         <td>{{ $data->tanggal_kembali }}</td>
+                                        <td>Rp.{{ $data->harga_total }}</td>
                                         <td>
                                             <a href="{{ route('pesanan.edit', $data->id) }}"
                                                 class="btn btn-warning">Edit</a>
+                                            <a href="{{ route('pesanan.kembali.form', $data->id) }}"
+                                                class="btn btn-success"
+                                                onclick="return confirm('Apakah mobil sudah kembali?')">Kembalikan</a>
+
                                             <form action="{{ route('pesanan.destroy', $data->id) }}" method="POST"
                                                 style="display: inline">
                                                 @csrf

@@ -14,10 +14,10 @@ class Mobil extends Model
     public function scopeSearch($query, $search)
     {
         return $query->where('nama_m', 'like', '%' . $search . '%')
-                    ->orWhere('kursi', 'like', '%' . $search . '%')
-                    ->orWhere('nomor_polisi', 'like', '%' . $search . '%')
-                    ->orWhere('tahun', 'like', '%' . $search . '%')
-                    ->orWhere('harga_per_hari', 'like', '%' . $search . '%');
+            ->orWhere('kursi', 'like', '%' . $search . '%')
+            ->orWhere('nomor_polisi', 'like', '%' . $search . '%')
+            ->orWhere('tahun', 'like', '%' . $search . '%')
+            ->orWhere('harga_per_hari', 'like', '%' . $search . '%');
     }
     public function merk()
     {
@@ -26,5 +26,9 @@ class Mobil extends Model
     public function pesanan()
     {
         return $this->belongsTo(Pesanan::class);
+    }
+    public function riwayat()
+    {
+        return $this->hasMany(Riwayat::class);
     }
 }
