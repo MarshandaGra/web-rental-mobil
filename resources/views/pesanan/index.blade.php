@@ -1,14 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Data Pemesan') }}
         </h2>
     </x-slot>
 
     <div class="flex">
-        <div class="flex-1 ml-60 p-3">
+        <div class="flex-1 ml-64 p-4">
             <main class="container mx-auto">
-        
+                <h1 class="h3">Data Penyewa</h1>
+                <ul class="list-group mt-3">
+                    <li class="list-group-item list-group-item-dark text-secondary">Data Penyewa Mobil</li>
+                </ul>
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
@@ -16,7 +19,7 @@
                 @endif
 
                 <div class="row mt-4">
-                    <div class="col-4">
+                    <div class="col-7">
                         <!-- Header dengan warna biru -->
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Tambah Data</h4>
@@ -105,38 +108,40 @@
                             <button type="submit" class="btn btn-primary">Tambah</button>
                         </form>
                     </div>
-                    <div class="col-8">
-                        <div class="mb-4">
+                    <div class="row">
+                        <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Penyewa</h4>
                         </div>
-                        <form method="GET" action="{{ route('pesanan.index') }}">
-                            <div class="input-group mb-3">
-                                <input type="text" name="search" class="form-control mr-2 rounded shadow" placeholder="Cari Pemesan, Mobil, Jenis Pembayaran..." value="{{ $search }}">
-                                <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
-                            </div>
-                        </form>
-                        <table class="table table-bordered shadow">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Pemesan</th>
                                     <th>Mobil</th>
                                     <th>Jenis Bayar</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Kembali</th>
+                                    <th>Total Bayar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($pesanan as $data)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data->pemesan->nama_pemesan }}</td>
                                         <td>{{ $data->mobil->nama_m }}</td>
                                         <td>{{ $data->bayar->jenis_bayar }}</td>
                                         <td>{{ $data->tanggal_mulai }}</td>
                                         <td>{{ $data->tanggal_kembali }}</td>
+                                        <td>Rp.{{ $data->harga_total }}</td>
                                         <td>
                                             <a href="{{ route('pesanan.edit', $data->id) }}"
                                                 class="btn btn-warning">Edit</a>
+                                            <a href="{{ route('pesanan.kembali.form', $data->id) }}"
+                                                class="btn btn-success"
+                                                onclick="return confirm('Apakah mobil sudah kembali?')">Kembalikan</a>
+
                                             <form action="{{ route('pesanan.destroy', $data->id) }}" method="POST"
                                                 style="display: inline">
                                                 @csrf
@@ -150,9 +155,11 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $pesanan->appends(['search' => $search])->links() }}
                     </div>
                 </div>
+
+
+
             </main>
         </div>
     </div>

@@ -11,17 +11,12 @@ class MerksController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $search = $request->input('search');
-    
-    $merks = Merk::when($search, function($query, $search) {
-        return $query->where('nama_merk', 'like', '%' . $search . '%');
-    })
-    ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
-    ->paginate(4);
-    
-    return view('merks.index', compact('merks', 'search'));
-}
+    {
+
+        $query = $request->input('query');
+        $merks = Merk::search($query)->paginate(5);
+        return view('merks.index', compact('merks', 'query'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -93,7 +88,14 @@ class MerksController extends Controller
      */
     public function destroy(Merk $merk)
     {
+
+        // cek apakah kategori sedang digunakan oleh mobil
+        if ($merk->mobil()->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Merk ini sedang digunakan di data mobil dan tidak bisa dihapus.']);
+        }
+
+        // jika tidak digunakan hapus kategori
         $merk->delete();
-        return redirect()->route('merks.index')->with('danger', 'Merk berhasil dihapus');
+        return redirect()->route('merks.index')->with('success', 'Merk berhasil dihapus');
     }
 }

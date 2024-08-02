@@ -130,12 +130,23 @@ class PemesanController extends Controller
 
     public function destroy($id)
     {
+
         $pemesan = Pemesan::findOrFail($id);
-        if ($pemesan->image) {
-            Storage::delete($pemesan->image);
+
+        // Cek apakah pemesan memiliki pesanan yang sedang aktif
+        if ($pemesan->pesanan()->exists()) {
+            // Jika ada pesanan, tampilkan pesan kesalahan
+            return redirect()->route('pemesans.index')->withErrors(['error' => 'Pemesan ini sedang menyewa mobil dan tidak bisa dihapus.']);
         }
+
+        // Hapus gambar jika ada
+        if ($pemesan->image) {
+            Storage::delete('public/images/' . $pemesan->image);
+        }
+
+        // Hapus pemesan
         $pemesan->delete();
 
-        return redirect()->route('pemesans.index')->with('danger', 'Data pemesan berhasil dihapus');
+        return redirect()->route('pemesans.index')->with('success', 'Data pemesan berhasil dihapus');
     }
 }

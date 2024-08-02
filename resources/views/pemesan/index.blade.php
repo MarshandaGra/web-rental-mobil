@@ -1,24 +1,36 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Data Pemesan') }}
         </h2>
     </x-slot>
 
+
+
     <div class="flex">
-        <div class="flex-1 ml-60 p-3">
+        <div class="flex-1 ml-64 p-4">
             <main class="container mx-auto">
+                <h1 class="h3">Data Pemesan</h1>
+                <ul class="list-group mt-3">
+                    <li class="list-group-item list-group-item-dark text-secondary">Data Pemesan</li>
+                </ul>
 
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
-                @if (session()->has('danger'))
-                <div class="alert alert-danger mt-3" role="alert">
-                    {{ session('danger') }}
-                </div>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger mt-3">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
+
                 <div class="row mt-4">
                     <div class="col-4">
                         <!-- Header dengan warna biru -->
@@ -83,38 +95,40 @@
                     </div>
 
                     <div class="col-8">
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Pemesan</h4>
                         </div>
-
-                        <form method="GET" action="{{ route('pemesans.index') }}">
-                            <div class="input-group mb-3">
-                                <input type="text" name="search" class="form-control mr-2 rounded shadow" placeholder="Cari Pemesan..." value="{{ $search }}">
-                                <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
-                            </div>
-                        </form>
-
-                        <table class="table table-bordered shadow rounded">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama Pemesan</th>
                                     <th>Alamat</th>
                                     <th>Nomor HP</th>
+                                    <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($pemesan as $data)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data->nama_pemesan }}</td>
                                         <td>{{ $data->alamat }}</td>
                                         <td>{{ $data->no_hp }}</td>
-                                        
+                                        <td>
+                                            @if ($data->image)
+                                                <img src="{{ Storage::url('images/' . $data->image) }}"
+                                                    style="width: 50px;">
+                                            @else
+                                                Tidak ada gambar
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('pemesans.edit', $data->id) }}"
                                                 class="btn btn-warning">Edit</a>
                                             <a href="{{ route('pemesans.show', $data->id) }}"
-                                                class="btn btn-info">Detail</a>
+                                                class="btn btn-secondary">Detail</a>
                                             <form action="{{ route('pemesans.destroy', $data->id) }}" method="POST"
                                                 style="display: inline;">
                                                 @csrf
@@ -129,13 +143,19 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <!-- Pagination Links -->
-                {{ $pemesan->appends(['search' => $search])->links() }}
                     </div>
                 </div>
             </main>
         </div>
     </div>
+
+
+    <div class="container mx-auto mt-8 px-4">
+        <div class="flex justify-between items-center mb-6">
+
+
+
+        </div>
 
         <script>
             function previewImage() {
