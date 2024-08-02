@@ -5,7 +5,7 @@
         }
     </style>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60">
             {{ __('Data Mobil') }}
         </h2>
     </x-slot>
@@ -14,16 +14,16 @@
     <div class="flex">
         <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                
+
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
                 @if (session()->has('danger'))
-                <div class="alert alert-danger mt-3" role="alert">
-                    {{ session('danger') }}
-                </div>
+                    <div class="alert alert-danger mt-3" role="alert">
+                        {{ session('danger') }}
+                    </div>
                 @endif
 
                 @if ($errors->any())
@@ -124,7 +124,7 @@
                             <!-- Preview Image -->
                             <div class="mb-3">
                                 <img id="imagePreview" src="" alt="Preview Gambar"
-                                style="display: none; width: 100px; height: auto;">
+                                    style="display: none; width: 100px; height: auto;">
                             </div>
                             <div class="mb-3">
                                 <label for="gambar" class="form-label">Gambar Mobil</label>
@@ -145,7 +145,8 @@
                         </div>
                         <form method="GET" action="{{ route('mobils.index') }}">
                             <div class="input-group mb-3">
-                                <input type="text" name="search" class="form-control mr-2 rounded shadow" placeholder="Cari Pemesan..." value="{{ $search }}">
+                                <input type="text" name="search" class="form-control mr-2 rounded shadow"
+                                    placeholder="Cari Mobil..." value="{{ $search }}">
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
@@ -189,7 +190,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger"
-                                                    onclick="return confirm('Apakah anda yakin inggin menghapus data ini')">Hapus</button>
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini')">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>

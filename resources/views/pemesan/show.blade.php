@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60">
             {{ __('Detail Pemesan - ') . $pemesan->nama_pemesan }}
         </h2>
     </x-slot>
@@ -47,6 +47,9 @@
     </div>
     
 </x-app-layout>
+
+
+
 
 
 

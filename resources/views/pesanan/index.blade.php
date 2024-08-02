@@ -1,23 +1,33 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Data Pemesan') }}
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
+            {{ __('Data Penyewaan') }}
         </h2>
     </x-slot>
 
     <div class="flex">
-        <div class="flex-1 ml-64 p-4">
+        <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                <h1 class="h3">Data Penyewa</h1>
-                <ul class="list-group mt-3">
-                    <li class="list-group-item list-group-item-dark text-secondary">Data Penyewa Mobil</li>
-                </ul>
+                
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
-
+                @if (session()->has('danger'))
+                    <div class="alert alert-danger mt-3" role="alert">
+                        {{ session('danger') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <div class="row mt-4">
                     <div class="col-7">
                         <!-- Header dengan warna biru -->
@@ -112,6 +122,13 @@
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Penyewa</h4>
                         </div>
+                        <form method="GET" action="{{ route('pesanan.index') }}">
+                            <div class="input-group mb-3">
+                                <input type="text" name="search" class="form-control mr-2 rounded shadow"
+                                    placeholder="Cari Penyewa..." value="{{ $search }}">
+                                <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
+                            </div>
+                        </form>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -155,11 +172,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $pesanan->appends(['search' => $search])->links() }}
                     </div>
                 </div>
-
-
-
             </main>
         </div>
     </div>

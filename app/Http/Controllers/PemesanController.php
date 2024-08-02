@@ -147,6 +147,6 @@ class PemesanController extends Controller
         // Hapus pemesan
         $pemesan->delete();
 
-        return redirect()->route('pemesans.index')->with('success', 'Data pemesan berhasil dihapus');
+        return redirect()->route('pemesans.index')->with('danger', 'Data pemesan berhasil dihapus');
     }
 }

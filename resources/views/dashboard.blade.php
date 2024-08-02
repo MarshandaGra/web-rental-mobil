@@ -8,7 +8,7 @@
     <div class="flex">
         <div class="flex-1 ml-64 p-4">
             <main class="container mx-auto">
-                <p class="h1">Welcome Back!</p>
+                <p class="h1">Welcome Back </p>
             </main>
         </div>
     </div>
