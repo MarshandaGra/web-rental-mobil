@@ -13,9 +13,13 @@ class MerksController extends Controller
     public function index(Request $request)
     {
 
-        $query = $request->input('query');
-        $merks = Merk::search($query)->paginate(5);
-        return view('merks.index', compact('merks', 'query'));
+        $search = $request->input('search');
+
+        $merks = Merk::when($search, function ($query, $search) {
+            return $query->search($search);
+        })->paginate(4);
+
+        return view('merks.index', compact('merks', 'search', 'merks'));
     }
 
     /**

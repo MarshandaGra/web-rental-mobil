@@ -1,6 +1,6 @@
 <x-app-layout class="d-flex">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60 px-2">
             {{ __('Data Jenis Pembayaran') }}
         </h2>
     </x-slot>
@@ -8,10 +8,7 @@
     <div class="flex">
         <div class="flex-1 ml-64 p-4">
             <main class="container mx-auto">
-                <h1 class="h3">Data Jenis Pembayaran</h1>
-                <ul class="list-group mt-3">
-                    <li class="list-group-item list-group-item-dark text-secondary">Data Jenis Pembayaran</li>
-                </ul>
+
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
@@ -56,6 +53,13 @@
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Jenis Bayar</h4>
                         </div>
+                        <form method="GET" action="{{ route('bayar.index') }}">
+                            <div class="input-group mb-3">
+                                <input type="text" name="search" class="form-control mr-2 rounded shadow"
+                                    placeholder="Cari Jenis Pembayaran..." value="{{ $search }}">
+                                <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
+                            </div>
+                        </form>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>

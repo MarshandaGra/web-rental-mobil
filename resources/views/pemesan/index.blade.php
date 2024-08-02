@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60">
             {{ __('Data Pemesan') }}
         </h2>
     </x-slot>
@@ -8,12 +8,9 @@
 
 
     <div class="flex">
-        <div class="flex-1 ml-64 p-4">
+        <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                <h1 class="h3">Data Pemesan</h1>
-                <ul class="list-group mt-3">
-                    <li class="list-group-item list-group-item-dark text-secondary">Data Pemesan</li>
-                </ul>
+
 
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
@@ -98,6 +95,13 @@
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Pemesan</h4>
                         </div>
+                        <form method="GET" action="{{ route('pemesans.index') }}">
+                            <div class="input-group mb-3">
+                                <input type="text" name="search" class="form-control mr-2 rounded shadow"
+                                    placeholder="Cari Pemesan ..." value="{{ $search }}">
+                                <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
+                            </div>
+                        </form>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>

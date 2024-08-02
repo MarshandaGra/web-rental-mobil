@@ -9,8 +9,13 @@ class BayarController extends Controller
 {
     public function index(Request $request)
     {
-        $bayar = Bayar::all();
-        return view('bayar.index', compact('bayar'));
+        $search = $request->input('search');
+
+        $bayar = Bayar::when($search, function ($query, $search) {
+            return $query->search($search);
+        })->paginate(4);
+
+        return view('bayar.index', compact('bayar', 'search', 'bayar'));
     }
 
     public function create()
