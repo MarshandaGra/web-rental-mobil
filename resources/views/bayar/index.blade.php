@@ -8,17 +8,13 @@
     <div class="flex">
         <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                
+
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
-                @if (session()->has('danger'))
-                <div class="alert alert-danger mt-3" role="alert">
-                    {{ session('danger') }}
-                </div>
-            @endif
+
                 @if ($errors->any())
                     <div class="alert alert-danger mt-3">
                         <ul>

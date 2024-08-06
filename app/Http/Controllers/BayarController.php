@@ -10,13 +10,13 @@ class BayarController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-    
-        $bayar = Bayar::when($search, function($query, $search) {
+
+        $bayar = Bayar::when($search, function ($query, $search) {
             return $query->where('jenis_bayar', 'like', '%' . $search . '%');
         })
-        ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
-        ->paginate(4);
-        
+            ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+            ->paginate(4);
+
         return view('bayar.index', compact('bayar', 'search'));
     }
 
@@ -29,7 +29,10 @@ class BayarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_bayar' => 'required'
+            'jenis_bayar' => 'required|unique:bayars,jenis_bayar'
+        ], [
+            'jenis_bayar.required' => 'jenis bayar harus di isi',
+            'jenis_bayar.unique' => 'jenis bayar sudah terdaftar',
         ]);
 
         Bayar::create($request->all());

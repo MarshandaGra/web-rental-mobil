@@ -15,16 +15,23 @@ class MobilsController extends Controller
      */
     public function index(Request $request)
     {
-        $mobil = Mobil::all();
         $merk = Merk::all();
-
         $search = $request->input('search');
+        $trashed = $request->input('trashed'); // Menyaring data yang dihapus
 
-        $mobil = Mobil::when($search, function ($query, $search) {
-            return $query->search($search);
-        })->paginate(5);
+        $query = Mobil::query();
 
-        return view('mobils.index', compact('mobil', 'search', 'merk'));
+        if ($trashed) {
+            $query->withTrashed(); // Menyertakan data yang dihapus
+        }
+
+        if ($search) {
+            $query->search($search); // Pencarian
+        }
+
+        $mobil = $query->paginate(5); // Paging
+
+        return view('mobils.index', compact('mobil', 'search', 'merk', 'trashed'));
     }
 
     /**
@@ -40,7 +47,7 @@ class MobilsController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'mobil' => 'required|unique:mobils,nama_m|max:255|',
+            'mobil' => 'required|max:255|',
             'merk' => 'required',
             'kursi' => 'required|max:5',
             'npolisi' => 'required|unique:mobils,nomor_polisi|max:100',
@@ -115,7 +122,7 @@ class MobilsController extends Controller
         $validateData = $request->validate([
             'mobil' => 'required|unique:mobils,nama_m,' . $mobil->id . '|max:255',
             'merk' => 'required',
-            'kursi' => 'required|max:5',
+            'kursi' => 'required|max:5|min:0',
             'npolisi' => 'required|unique:mobils,nomor_polisi,' . $mobil->id . '|max:100',
             'tahun' => 'required|min:4',
             'harga_per_hari' => 'required|max:150|min:6',
@@ -127,6 +134,7 @@ class MobilsController extends Controller
             'merk.required' => 'Merk mobil harus di isi',
             'kursi.required' => 'Kursi mobil harus di isi',
             'kursi.max' => 'Maximal anggka adalah 5',
+            'kursi.min' => 'Minimal kursi adalah 5',
             'npolisi.required'  => 'Nomor polisi harus di isi',
             'npolisi.unique' => 'Nomor polisi sudah terdaftar',
             'tahun.required' => 'Tahun mobil harus di isi',
@@ -175,25 +183,24 @@ class MobilsController extends Controller
      */
     public function destroy(Mobil $mobil)
     {
-
-        try {
-            // Cek apakah mobil sedang/akan disewa
-            if ($mobil->pesanan()->exists()) {
-                return redirect()->back()->withErrors(['error' => 'Mobil ini sedang/akan disewa dan tidak bisa dihapus.']);
-            }
-
-            // Jika tidak digunakan hapus gambar dari storage (jika ada)
-            if ($mobil->gambar) {
-                Storage::delete('public/images/' . $mobil->gambar);
-            }
-
-            // Hapus mobil
-            $mobil->delete();
-
-            return redirect()->route('mobils.index')->with('danger', 'Data Mobil berhasil dihapus');
-        } catch (\Illuminate\Database\QueryException $ex) {
-            // Menangkap kesalahan foreign key dan menampilkan pesan yang ramah pengguna
-            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menghapus mobil. Pastikan tidak ada pesanan yang terkait.']);
+        // Cek apakah mobil sedang disewa
+        if ($mobil->pesanan()->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Mobil ini sedang disewa dan tidak bisa dihapus']);
         }
+
+        // // Cek apakah mobil memiliki data riwayat
+        // if ($mobil->riwayat()->exists()) {
+        //     return redirect()->back()->withErrors(['error' => 'Mobil memiliki data riwayat dan tidak bisa dihapus']);
+        // }
+
+        // Hapus gambar dari storage jika ada
+        if ($mobil->gambar) {
+            Storage::delete('public/images/' . $mobil->gambar);
+        }
+
+        // Soft delete mobil
+        $mobil->delete();
+
+        return redirect()->route('mobils.index')->with('success', 'Data Mobil berhasil dihapus');
     }
 }

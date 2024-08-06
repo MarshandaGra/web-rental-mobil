@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pesanan extends Model
 {
     use HasFactory;
     protected $table = 'pesanans';
     protected $fillable = ['pemesan_id', 'mobil_id', 'bayar_id', 'tanggal_mulai', 'tanggal_kembali', 'harga_total', 'denda', 'rusak', 'tanggal_pengembalian',];
+
 
     public function mobil()
     {

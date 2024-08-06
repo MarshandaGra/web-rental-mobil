@@ -11,16 +11,16 @@ class PemesanController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-    
-    $pemesan = Pemesan::when($search, function($query, $search) {
-        return $query->where('nama_pemesan', 'like', '%' . $search . '%')
-                    ->orWhere('alamat', 'like', '%' . $search . '%')
-                    ->orWhere('no_hp', 'like', '%' . $search . '%');
-    })
-    ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
-    ->paginate(4);
-    
-    return view('pemesan.index', compact('pemesan', 'search'));
+
+        $pemesan = Pemesan::when($search, function ($query, $search) {
+            return $query->where('nama_pemesan', 'like', '%' . $search . '%')
+                ->orWhere('alamat', 'like', '%' . $search . '%')
+                ->orWhere('no_hp', 'like', '%' . $search . '%');
+        })
+            ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+            ->paginate(4);
+
+        return view('pemesan.index', compact('pemesan', 'search'));
     }
 
     public function create()
@@ -138,6 +138,11 @@ class PemesanController extends Controller
             // Jika ada pesanan, tampilkan pesan kesalahan
             return redirect()->route('pemesans.index')->withErrors(['error' => 'Pemesan ini sedang menyewa mobil dan tidak bisa dihapus.']);
         }
+
+        // if ($pemesan->riwayat()->exists()) {
+        //     return redirect()->route('pemesans.index')->withErrors(['error' => 'Pemesan ini memiliki data di history dan tidak bisa dihapus.']);
+        // }
+
 
         // Hapus gambar jika ada
         if ($pemesan->image) {

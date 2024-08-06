@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight ml-60">
-            {{ __('Detail Mobil - ') .$mobil->nama_m }}
+            {{ __('Detail Mobil - ') . $mobil->nama_m }}
         </h2>
     </x-slot>
 
@@ -11,10 +11,9 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="d-flex">
                         <div class="p-2">
-                            <img id="imagePreview"
-                            src="{{ asset('storage/public/images/' . $mobil->gambar) }}"
-                            alt="Preview image"
-                            style="display: {{ $mobil->gambar ? 'block' : 'none' }}; width: 200px;">
+                            <img id="imagePreview" src="{{ asset('storage/images/' . $mobil->gambar) }}"
+                                alt="Preview image"
+                                style="display: {{ $mobil->gambar ? 'block' : 'none' }}; width: 200px;">
                         </div>
                         <div class="p-2">
                             <table class="table table-borderless">
@@ -36,15 +35,18 @@
                                 </tr>
                                 <tr>
                                     <td>Tahun</td>
-                                    <td>:  {{ $mobil->tahun }}</td>
+                                    <td>: {{ $mobil->tahun }}</td>
                                 </tr>
                                 <tr>
                                     <td>Harga per Hari </td>
-                                    <td>:  <p style="display: inline">Rp. {{ number_format($mobil->harga_per_hari, 0, ',', '.') }} </p> </td>
+                                    <td>: <p style="display: inline">Rp.
+                                            {{ number_format($mobil->harga_per_hari, 0, ',', '.') }} </p>
+                                    </td>
                                 </tr>
                             </table>
                             <a href="{{ route('mobils.edit', $mobil->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('mobils.destroy', $mobil->id) }}" method="POST" style="display: inline">
+                            <form action="{{ route('mobils.destroy', $mobil->id) }}" method="POST"
+                                style="display: inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"

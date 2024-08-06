@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mobil extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
     protected $table = 'mobils';
     protected $fillable = ['nama_m', 'merk_id', 'kursi', 'nomor_polisi', 'tahun', 'harga_per_hari', 'gambar'];
+    protected $dates = ['deleted_at'];
 
     public function scopeSearch($query, $search)
     {
@@ -25,7 +27,7 @@ class Mobil extends Model
     }
     public function pesanan()
     {
-        return $this->belongsTo(Pesanan::class);
+        return $this->hasMany(Pesanan::class);
     }
     public function riwayat()
     {

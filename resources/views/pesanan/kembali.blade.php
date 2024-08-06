@@ -10,14 +10,18 @@
             <main class="container mx-auto">
                 <h1 class="h3">Pengembalian Mobil</h1>
 
-                <form action="{{ route('pesanan.kembali', $pesanan->id) }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="denda">Denda:</label>
-                        <input type="number" id="denda" name="denda" class="form-control" required>
+                <div class="row">
+                    <div class="col-5">
+                        <form action="{{ route('pesanan.kembali', $pesanan->id) }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="denda">Denda:</label>
+                                <input type="number" id="denda" name="denda" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Kembalikan</button>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-primary">Kembalikan</button>
-                </form>
+                </div>
             </main>
         </div>
     </div>

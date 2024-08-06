@@ -8,7 +8,6 @@
     <div class="flex">
         <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-            
                 <div class="row mt-4">
                     <div class="col-8">
                         <!-- Header dengan warna biru -->
@@ -16,7 +15,8 @@
                             <h4 class="bg-secondary text-white p-2 rounded">Edit Data</h4>
                         </div>
                         <!-- Form dengan shadow -->
-                        <form method="POST" action="{{ route('pemesans.update', $pemesan->id) }}" class="shadow p-3 mb-5 bg-white rounded" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('pemesans.update', $pemesan->id) }}"
+                            class="shadow p-3 mb-5 bg-white rounded" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
@@ -52,17 +52,18 @@
                                     </div>
                                 @enderror
                             </div>
+                            <!-- Preview Gambar Pemesan -->
                             <div class="mb-3">
                                 <img id="imagePreview"
-                                    src="{{ asset('storage/public/images/' . $pemesan->image) }}" 
+                                    src="{{ $pemesan->image ? asset('storage/images/' . $pemesan->image) : '' }}"
                                     alt="Preview Image"
                                     style="display: {{ $pemesan->image ? 'block' : 'none' }}; width: 200px;">
-                            </div>                           
+                            </div>
+                            <!-- Input File untuk Gambar -->
                             <div class="mb-3">
                                 <label for="image" class="form-label">Gambar Pemesan</label>
                                 <input type="file" name="image" onchange="previewImage()"
-                                value="{{ old('gambar', $pemesan->image) }}"
-                                class="form-control @error('image') is-invalid @enderror" id="image">
+                                    class="form-control @error('image') is-invalid @enderror" id="image">
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -76,14 +77,10 @@
         </div>
     </div>
 
-
     <script>
         function previewImage() {
             const fileInput = document.getElementById('image');
             const preview = document.getElementById('imagePreview');
-
-            // Menghapus preview gambar sebelumnya
-            preview.style.display = 'none';
 
             // Cek apakah ada file yang dipilih
             if (fileInput.files && fileInput.files[0]) {
@@ -97,12 +94,10 @@
 
                 // Membaca file
                 reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                // Jika tidak ada file, sembunyikan preview
+                preview.style.display = 'none';
             }
         }
     </script>
 </x-app-layout>
-
-
-
-
-

@@ -16,8 +16,8 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Pemesan</th>
                                 <th>Mobil</th>
+                                <th>Pemesan</th>
                                 <th>Tanggal Pinjam</th>
                                 <th>Tanggal Kembali</th>
                                 <th>Total Harga</th>
@@ -28,8 +28,9 @@
                             @foreach ($riwayat as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $data->mobil->nama_m }}</td>
-                                    <td>{{ $data->pemesan->nama_pemesan }}</td>
+                                    <td>{{ $data->mobil ? $data->mobil->nama_m : 'mobil tidak tersesia' }}</td>
+                                    <td>{{ $data->pemesan ? $data->pemesan->nama_pemesan : 'pemesan tidak tersedia' }}
+                                    </td>
                                     <td>{{ $data->tanggal_mulai }}</td>
                                     <td>{{ $data->tanggal_kembali }}</td>
                                     <td>Rp{{ number_format($data->harga_total, 0, ',', '.') }}</td>

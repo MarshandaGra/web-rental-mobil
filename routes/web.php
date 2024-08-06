@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MerksController;
 use App\Http\Controllers\MobilsController;
 use App\Http\Controllers\PemesanController;
@@ -26,9 +26,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,20 +34,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('auth')->group(function () {
+    // ROUTE NEW
+    Route::resource('merks', MerksController::class);
+    Route::resource('mobils', MobilsController::class);
+    Route::resource('pemesans', PemesanController::class);
 
-// ROUTE NEW
-Route::resource('merks', MerksController::class);
-Route::resource('mobils', MobilsController::class);
-Route::resource('pemesans', PemesanController::class);
-
-// PESANAN
-Route::resource('pesanan', PesanannController::class);
-// route pengembalian
-Route::post('pesanan/{id}/kembali', [PesanannController::class, 'kembali'])->name('pesanan.kembali');
-Route::get('pesanan{id}/kembali', [PesanannController::class, 'formDenda'])->name('pesanan.kembali.form');
-Route::get('/riwayat', [PesanannController::class, 'riwayat'])->name('penyewaan.riwayat');
-
-
+    // PESANAN
+    Route::resource('pesanan', PesanannController::class);
+    // route pengembalian
+    Route::post('pesanan/{id}/kembali', [PesanannController::class, 'kembali'])->name('pesanan.kembali');
+    Route::get('pesanan{id}/kembali', [PesanannController::class, 'formDenda'])->name('pesanan.kembali.form');
+    Route::get('/riwayat', [PesanannController::class, 'riwayat'])->name('penyewaan.riwayat');
+});
 
 
 

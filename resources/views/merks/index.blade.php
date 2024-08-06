@@ -9,8 +9,8 @@
     <div class="flex">
         <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                
-                
+
+
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
@@ -66,7 +66,7 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        <table class="table table-bordered ">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
