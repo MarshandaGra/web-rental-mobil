@@ -226,5 +226,14 @@
                 reader.readAsDataURL(fileInput.files[0]);
             }
         }
+
+    //     function validateForm() {
+    //     var kursi = document.getElementById('kursi').value;
+    //     if (kursi <= 0) {
+    //         alert("Jumlah kursi tidak boleh 0 atau bilangan negatif.");
+    //         return false;
+    //     }
+    //     return true;
+    // }
     </script>
 </x-app-layout>`

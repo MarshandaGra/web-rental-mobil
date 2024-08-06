@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes moveCar {
+    0% { left: -100px; }
+    100% { left: 100%; }
+}
+
+.animated-car {
+    position: absolute;
+    top: 50%;
+    left: -100px;
+    width: 100px;
+    height: auto;
+    animation: moveCar 10s linear infinite;
+    z-index: -1; /* Pastikan mobil berada di belakang teks */
+}

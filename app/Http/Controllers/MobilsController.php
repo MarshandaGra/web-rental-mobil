@@ -22,7 +22,8 @@ class MobilsController extends Controller
 
         $mobil = Mobil::when($search, function ($query, $search) {
             return $query->search($search);
-        })->paginate(5);
+        })->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+        ->paginate(4);
 
         return view('mobils.index', compact('mobil', 'search', 'merk'));
     }
@@ -42,7 +43,7 @@ class MobilsController extends Controller
         $validateData = $request->validate([
             'mobil' => 'required|unique:mobils,nama_m|max:255|',
             'merk' => 'required',
-            'kursi' => 'required|max:5',
+            'kursi' => 'required|max:5|min:1',
             'npolisi' => 'required|unique:mobils,nomor_polisi|max:100',
             'tahun' => 'required|min:4',
             'harga_per_hari' => 'required|max:150|min:6',
@@ -54,6 +55,7 @@ class MobilsController extends Controller
             'merk.required' => 'Merk mobil harus di isi',
             'kursi.required' => 'Kursi mobil harus di isi',
             'kursi.max' => 'Maximal anggka adalah 5',
+            'kursi.min' => 'Minimal angka adalah 1',
             'npolisi.required'  => 'Nomor polisi harus di isi',
             'npolisi.unique' => 'Nomor polisi sudah terdaftar',
             'tahun.required' => 'Tahun mobil harus di isi',
@@ -115,7 +117,7 @@ class MobilsController extends Controller
         $validateData = $request->validate([
             'mobil' => 'required|unique:mobils,nama_m,' . $mobil->id . '|max:255',
             'merk' => 'required',
-            'kursi' => 'required|max:5',
+            'kursi' => 'required|max:5|min:1',
             'npolisi' => 'required|unique:mobils,nomor_polisi,' . $mobil->id . '|max:100',
             'tahun' => 'required|min:4',
             'harga_per_hari' => 'required|max:150|min:6',
@@ -126,7 +128,8 @@ class MobilsController extends Controller
             'mobil.max'  => 'Maximal karakter adalah 255',
             'merk.required' => 'Merk mobil harus di isi',
             'kursi.required' => 'Kursi mobil harus di isi',
-            'kursi.max' => 'Maximal anggka adalah 5',
+            'kursi.max' => 'Maximal angka adalah 5',
+            'kursi.min' => 'Minimal angka adalah 1',
             'npolisi.required'  => 'Nomor polisi harus di isi',
             'npolisi.unique' => 'Nomor polisi sudah terdaftar',
             'tahun.required' => 'Tahun mobil harus di isi',
@@ -175,25 +178,27 @@ class MobilsController extends Controller
      */
     public function destroy(Mobil $mobil)
     {
+            try {
+                // Cek apakah mobil sedang/akan disewa
+                if ($mobil->pesanan()->exists()) {
+                    return redirect()->back()->withErrors(['error' => 'Mobil ini sedang/akan disewa dan tidak bisa dihapus.']);
+                }
+                if ($mobil->riwayat()->exists()) {
+                    return redirect()->back()->withErrors(['error' => 'Mobil memiliki data history dan tidak bisa dihapus.']);
+                }
 
-        try {
-            // Cek apakah mobil sedang/akan disewa
-            if ($mobil->pesanan()->exists()) {
-                return redirect()->back()->withErrors(['error' => 'Mobil ini sedang/akan disewa dan tidak bisa dihapus.']);
+                // Jika tidak digunakan, hapus gambar dari storage (jika ada)
+                if ($mobil->gambar) {
+                    Storage::delete('public/images/' . $mobil->gambar);
+                }
+
+                // Hapus mobil
+                $mobil->delete();
+
+                return redirect()->route('mobils.index')->with('danger', 'Data Mobil berhasil dihapus');
+            } catch (\Illuminate\Database\QueryException $ex) {
+                // Menangkap kesalahan foreign key dan menampilkan pesan yang ramah pengguna
+                return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menghapus mobil. Pastikan tidak ada pesanan yang terkait.']);
             }
-
-            // Jika tidak digunakan hapus gambar dari storage (jika ada)
-            if ($mobil->gambar) {
-                Storage::delete('public/images/' . $mobil->gambar);
             }
-
-            // Hapus mobil
-            $mobil->delete();
-
-            return redirect()->route('mobils.index')->with('danger', 'Data Mobil berhasil dihapus');
-        } catch (\Illuminate\Database\QueryException $ex) {
-            // Menangkap kesalahan foreign key dan menampilkan pesan yang ramah pengguna
-            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menghapus mobil. Pastikan tidak ada pesanan yang terkait.']);
-        }
     }
-}

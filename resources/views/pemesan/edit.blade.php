@@ -61,7 +61,7 @@
                             <div class="mb-3">
                                 <label for="image" class="form-label">Gambar Pemesan</label>
                                 <input type="file" name="image" onchange="previewImage()"
-                                value="{{ old('gambar', $pemesan->image) }}"
+                                value="{{ old('image', $pemesan->image) }}"
                                 class="form-control @error('image') is-invalid @enderror" id="image">
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
