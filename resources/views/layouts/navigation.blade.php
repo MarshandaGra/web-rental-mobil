@@ -5,6 +5,7 @@
                 <x-application-logo class="block h-9 w-auto fill-current text-white" />
             </a>
         </div>
+<<<<<<< HEAD
 
 
         <p class="h5 mt-1 ml-4" style="font-weight: 900">
@@ -12,6 +13,9 @@
         </p>
         <div class="mt-4 space-y-1">
 
+=======
+        <div class="mt-10 space-y-1">
+>>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
             <!-- Navigation Links -->
             <hr>
             <a href="{{ route('dashboard') }}"
@@ -20,31 +24,46 @@
             </a>
             <hr>
 
+            <!-- Heading -->
+            <div class="sidebar-heading pl-4 text-slate-200 mt-1" style="font-size: 15px ">
+                Master Mobil
+            </div>
+
             <a href="{{ route('merks.index') }}"
                 class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('merks.index') ? 'bg-[#67b8e7]' : '' }}">
                 <i class="fa-solid fa-marker pr-2"></i> {{ __('Data Merk') }}
             </a>
 
             <a href="{{ route('mobils.index') }}"
-                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('mobils.index') ? 'bg-[#67b8e7]' : '' }}">
+                class="flex items-center pt-1 py-2 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('mobils.index') ? 'bg-[#67b8e7]' : '' }}">
                 <i class="fa-solid fa-car-side pr-2"></i> {{ __('Data Mobil') }}
             </a>
+
             <hr>
+            <!-- Heading -->
+            <div class="sidebar-heading pl-4 text-slate-200 mt-1" style="font-size: 15px ">
+                Master Pemesan
+            </div>
             <a href="{{ route('pemesans.index') }}"
                 class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('pemesans.index') ? 'bg-[#67b8e7]' : '' }}">
                 <i class="fa-solid fa-user pr-2"></i> {{ __('Data Pemesan') }}
             </a>
             <a href="{{ route('bayar.index') }}"
-                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('bayar.index') ? 'bg-[#67b8e7]' : '' }}">
+                class="flex items-center pt-1 py-2 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('bayar.index') ? 'bg-[#67b8e7]' : '' }}">
                 <i class="fa-solid fa-money-bill pr-2"></i> {{ __('Data Jenis Bayar') }}
             </a>
+
             <hr>
+            <!-- Heading -->
+            <div class="sidebar-heading pl-4 text-slate-200 mt-1" style="font-size: 15px ">
+                Master Penyewaan
+            </div>
             <a href="{{ route('pesanan.index') }}"
                 class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('pesanan.index') ? 'bg-[#67b8e7]' : '' }}">
                 <i class="fa-solid fa-hand-holding-heart pr-2"></i> {{ __('Data Penyewaan') }}
             </a>
             <a href="{{ route('penyewaan.riwayat') }}"
-                class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('penyewaan.riwayat') ? 'bg-[#67b8e7]' : '' }}">
+                class="flex items-center pt-1 py-2 px-4 rounded transition duration-200 hover:bg-white hover:text-[#000000] {{ request()->routeIs('penyewaan.riwayat') ? 'bg-[#67b8e7]' : '' }}">
                 <i class="fa-solid fa-clock-rotate-left pr-2"></i> {{ __('Histori') }}
             </a>
         </div>

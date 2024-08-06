@@ -130,13 +130,14 @@ class PemesanController extends Controller
 
     public function destroy($id)
     {
-
         $pemesan = Pemesan::findOrFail($id);
 
         // Cek apakah pemesan memiliki pesanan yang sedang aktif
         if ($pemesan->pesanan()->exists()) {
-            // Jika ada pesanan, tampilkan pesan kesalahan
             return redirect()->route('pemesans.index')->withErrors(['error' => 'Pemesan ini sedang menyewa mobil dan tidak bisa dihapus.']);
+        }
+        if ($pemesan->riwayat()->exists()) {
+            return redirect()->route('pemesans.index')->withErrors(['error' => 'Pemesan ini memiliki data di history dan tidak bisa dihapus.']);
         }
 
         // if ($pemesan->riwayat()->exists()) {
@@ -154,4 +155,5 @@ class PemesanController extends Controller
 
         return redirect()->route('pemesans.index')->with('danger', 'Data pemesan berhasil dihapus');
     }
+    
 }

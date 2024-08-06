@@ -226,6 +226,7 @@
             }
         }
 
+<<<<<<< HEAD
         // Tampilkan gambar saat halaman dimuat jika ada
         document.addEventListener('DOMContentLoaded', function() {
             const preview = document.getElementById('imagePreview');
@@ -237,5 +238,15 @@
                 preview.style.display = 'block';
             }
         });
+=======
+    //     function validateForm() {
+    //     var kursi = document.getElementById('kursi').value;
+    //     if (kursi <= 0) {
+    //         alert("Jumlah kursi tidak boleh 0 atau bilangan negatif.");
+    //         return false;
+    //     }
+    //     return true;
+    // }
+>>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
     </script>
 </x-app-layout>
