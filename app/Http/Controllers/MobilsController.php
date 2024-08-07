@@ -18,15 +18,12 @@ class MobilsController extends Controller
         $merk = Merk::all();
         $search = $request->input('search');
         $trashed = $request->input('trashed'); // Menyaring data yang dihapus
-
-<<<<<<< HEAD
         $query = Mobil::query();
-=======
-        $mobil = Mobil::when($search, function ($query, $search) {
-            return $query->search($search);
-        })->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
-        ->paginate(4);
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
+
+        // $merk = Mobil::when($search, function ($query, $search) {
+        //     return $query->search($search);
+        // })->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+        // ->paginate(4);
 
         if ($trashed) {
             $query->withTrashed(); // Menyertakan data yang dihapus
@@ -36,7 +33,7 @@ class MobilsController extends Controller
             $query->search($search); // Pencarian
         }
 
-        $mobil = $query->paginate(5); // Paging
+        $mobil = $query->orderBy('created_at', 'desc')->paginate(4); // Paging
 
         return view('mobils.index', compact('mobil', 'search', 'merk', 'trashed'));
     }
@@ -86,7 +83,7 @@ class MobilsController extends Controller
         if ($request->hasFile('gambar')) {
             $image = $request->file('gambar');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $imageName); // Simpan gambar di folder 'public/images'
+            $image->storeAs('public/images/mobils', $imageName); // Simpan gambar di folder 'public/images'
             $data['gambar'] = $imageName; // Simpan nama file gambar ke array data
         }
 
@@ -130,11 +127,7 @@ class MobilsController extends Controller
         $validateData = $request->validate([
             'mobil' => 'required|unique:mobils,nama_m,' . $mobil->id . '|max:255',
             'merk' => 'required',
-<<<<<<< HEAD
-            'kursi' => 'required|max:5|min:0',
-=======
             'kursi' => 'required|max:5|min:1',
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
             'npolisi' => 'required|unique:mobils,nomor_polisi,' . $mobil->id . '|max:100',
             'tahun' => 'required|min:4',
             'harga_per_hari' => 'required|max:150|min:6',
@@ -145,13 +138,8 @@ class MobilsController extends Controller
             'mobil.max'  => 'Maximal karakter adalah 255',
             'merk.required' => 'Merk mobil harus di isi',
             'kursi.required' => 'Kursi mobil harus di isi',
-<<<<<<< HEAD
-            'kursi.max' => 'Maximal anggka adalah 5',
-            'kursi.min' => 'Minimal kursi adalah 5',
-=======
             'kursi.max' => 'Maximal angka adalah 5',
             'kursi.min' => 'Minimal angka adalah 1',
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
             'npolisi.required'  => 'Nomor polisi harus di isi',
             'npolisi.unique' => 'Nomor polisi sudah terdaftar',
             'tahun.required' => 'Tahun mobil harus di isi',
@@ -168,13 +156,13 @@ class MobilsController extends Controller
         if ($request->hasFile('gambar')) {
             // Hapus gambar lama jika ada
             if ($mobil->gambar) {
-                Storage::delete('public/images/' . $mobil->gambar);
+                Storage::delete('public/images/mobils' . $mobil->gambar);
             }
 
             // Simpan gambar baru
             $image = $request->file('gambar');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $imageName); // Simpan gambar di folder 'public/images'
+            $image->storeAs('public/images/mobils', $imageName); // Simpan gambar di folder 'public/images'
             $data['gambar'] = $imageName; // Simpan nama file gambar ke array data
         } else {
             // Pertahankan gambar lama jika tidak ada gambar baru
@@ -200,27 +188,6 @@ class MobilsController extends Controller
      */
     public function destroy(Mobil $mobil)
     {
-<<<<<<< HEAD
-        // Cek apakah mobil sedang disewa
-        if ($mobil->pesanan()->exists()) {
-            return redirect()->back()->withErrors(['error' => 'Mobil ini sedang disewa dan tidak bisa dihapus']);
-        }
-
-        // // Cek apakah mobil memiliki data riwayat
-        // if ($mobil->riwayat()->exists()) {
-        //     return redirect()->back()->withErrors(['error' => 'Mobil memiliki data riwayat dan tidak bisa dihapus']);
-        // }
-
-        // Hapus gambar dari storage jika ada
-        if ($mobil->gambar) {
-            Storage::delete('public/images/' . $mobil->gambar);
-        }
-
-        // Soft delete mobil
-        $mobil->delete();
-
-        return redirect()->route('mobils.index')->with('success', 'Data Mobil berhasil dihapus');
-=======
             try {
                 // Cek apakah mobil sedang/akan disewa
                 if ($mobil->pesanan()->exists()) {
@@ -232,7 +199,7 @@ class MobilsController extends Controller
 
                 // Jika tidak digunakan, hapus gambar dari storage (jika ada)
                 if ($mobil->gambar) {
-                    Storage::delete('public/images/' . $mobil->gambar);
+                    Storage::delete('public/images/mobils' . $mobil->gambar);
                 }
 
                 // Hapus mobil
@@ -244,5 +211,4 @@ class MobilsController extends Controller
                 return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menghapus mobil. Pastikan tidak ada pesanan yang terkait.']);
             }
             }
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
     }

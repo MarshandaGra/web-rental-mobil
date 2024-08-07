@@ -63,12 +63,8 @@
                             <div class="mb-3">
                                 <label for="image" class="form-label">Gambar Pemesan</label>
                                 <input type="file" name="image" onchange="previewImage()"
-<<<<<<< HEAD
-                                    class="form-control @error('image') is-invalid @enderror" id="image">
-=======
                                 value="{{ old('image', $pemesan->image) }}"
                                 class="form-control @error('image') is-invalid @enderror" id="image">
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

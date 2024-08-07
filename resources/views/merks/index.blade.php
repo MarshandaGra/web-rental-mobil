@@ -21,15 +21,6 @@
                         {{ session('danger') }}
                     </div>
                 @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger mt-3">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
 
                 <div class="row mt-4">
                     <div class="col-4">
@@ -66,6 +57,11 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
+                        @if($merks->isEmpty())
+                            <div class="alert alert-warning" role="alert">
+                                Data tidak ditemukan.
+                            </div>
+                        @else
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -98,6 +94,7 @@
                             </tbody>
                         </table>
                         {{ $merks->appends(request()->input())->links() }}
+                        @endif
                     </div>
                 </div>
             </main>

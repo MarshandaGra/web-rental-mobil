@@ -5,17 +5,11 @@
                 <x-application-logo class="block h-9 w-auto fill-current text-white" />
             </a>
         </div>
-<<<<<<< HEAD
-
-
         <p class="h5 mt-1 ml-4" style="font-weight: 900">
             RENTAL MOBIL
         </p>
-        <div class="mt-4 space-y-1">
 
-=======
-        <div class="mt-10 space-y-1">
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
+        <div class="mt-4 space-y-1">
             <!-- Navigation Links -->
             <hr>
             <a href="{{ route('dashboard') }}"
@@ -73,7 +67,7 @@
             <x-dropdown align="right" width="25">
                 <x-slot name="trigger">
                     <button
-                        class="inline-flex items-center px-5 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                         <div>{{ Auth::user()->name }}</div>
 
                         <div class="ms-1">

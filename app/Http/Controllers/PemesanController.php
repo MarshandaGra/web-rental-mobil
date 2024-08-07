@@ -57,7 +57,7 @@ class PemesanController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $imageName); // Simpan image di folder 'public/images'
+            $image->storeAs('public/images/pemesan', $imageName); // Simpan image di folder 'public/images'
             $data['image'] = $imageName; // Simpan nama file image ke array data
         }
 
@@ -109,13 +109,13 @@ class PemesanController extends Controller
         if ($request->hasFile('image')) {
             // Hapus image lama jika ada
             if ($pemesan->image) {
-                Storage::delete('public/images/' . $pemesan->image);
+                Storage::delete('public/images/pemesan' . $pemesan->image);
             }
 
             // Simpan image baru
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $imageName); // Simpan image di folder 'public/images'
+            $image->storeAs('public/images/pemesan', $imageName); // Simpan image di folder 'public/images'
             $data['image'] = $imageName; // Simpan nama file image ke array data
         } else {
             // Pertahankan image lama jika tidak ada image baru
@@ -147,7 +147,7 @@ class PemesanController extends Controller
 
         // Hapus gambar jika ada
         if ($pemesan->image) {
-            Storage::delete('public/images/' . $pemesan->image);
+            Storage::delete('public/images/pemesan' . $pemesan->image);
         }
 
         // Hapus pemesan

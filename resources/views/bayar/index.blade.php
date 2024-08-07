@@ -15,16 +15,6 @@
                     </div>
                 @endif
 
-                @if ($errors->any())
-                    <div class="alert alert-danger mt-3">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <div class="row mt-4">
                     <div class="col-4">
                         <!-- Header dengan warna biru -->
@@ -60,6 +50,11 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
+                        @if($bayar->isEmpty())
+                            <div class="alert alert-warning" role="alert">
+                                Data tidak ditemukan.
+                            </div>
+                        @else
                         <table class="table table-bordered shadow">
                             <thead>
                                 <tr>
@@ -89,6 +84,7 @@
                             </tbody>
                         </table>
                         {{ $bayar->appends(request()->input())->links() }}
+                        @endif
                     </div>
                 </div>
             </main>

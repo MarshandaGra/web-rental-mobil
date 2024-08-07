@@ -25,15 +25,6 @@
                     </div>
                 @endif
 
-                @if ($errors->any())
-                    <div class="alert alert-danger mt-3">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
 
                 <div class="row mt-4">
                     <div class="col-4">
@@ -149,6 +140,11 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
+                        @if($mobil->isEmpty())
+                            <div class="alert alert-warning" role="alert">
+                                Data tidak ditemukan.
+                            </div>
+                        @else
                         <table class="table table-bordered shadow">
                             <thead>
                                 <tr>
@@ -197,6 +193,7 @@
                             </tbody>
                         </table>
                         {{ $mobil->appends(['search' => $search])->links() }}
+                        @endif
                     </div>
                 </div>
             </main>
@@ -226,7 +223,6 @@
             }
         }
 
-<<<<<<< HEAD
         // Tampilkan gambar saat halaman dimuat jika ada
         document.addEventListener('DOMContentLoaded', function() {
             const preview = document.getElementById('imagePreview');
@@ -238,15 +234,6 @@
                 preview.style.display = 'block';
             }
         });
-=======
-    //     function validateForm() {
-    //     var kursi = document.getElementById('kursi').value;
-    //     if (kursi <= 0) {
-    //         alert("Jumlah kursi tidak boleh 0 atau bilangan negatif.");
-    //         return false;
-    //     }
-    //     return true;
-    // }
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
+
     </script>
 </x-app-layout>
