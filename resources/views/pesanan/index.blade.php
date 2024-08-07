@@ -26,7 +26,13 @@
                         <div class="mb-3">
                             <h4 class="bg-secondary text-white p-2 rounded">Data Penyewa</h4>
                         </div>
-                        
+                        <form method="GET" action="{{ route('pesanan.index') }}">
+                            <div class="input-group mb-3">
+                                <input type="text" name="search" class="form-control mr-2 rounded shadow"
+                                    placeholder="Cari Penyewa..." value="{{ $search }}">
+                                <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
+                            </div>
+                        </form>
                         @if ($pesanan->isEmpty())
                             <div class="alert alert-warning" role="alert">
                             Data tidak ditemukan.
