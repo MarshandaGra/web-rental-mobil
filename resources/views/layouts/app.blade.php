@@ -25,6 +25,12 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .common-width {
+    width: 100%;
+}
+    </style>
 </head>
 
 <body class="font-sans antialiased">

@@ -5,8 +5,6 @@
         </h2>
     </x-slot>
 
-
-
     <div class="flex">
         <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
@@ -96,41 +94,47 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Nama Pemesan</th>
-                                    <th>Alamat</th>
-                                    <th>Nomor HP</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($pemesan as $data)
+                        @if ($pemesan->isEmpty())
+                            <div class="alert alert-warning" role="alert">
+                                Data tidak ditemukan.
+                            </div>
+                        @else
+                            <table class="table table-bordered">
+                                <thead>
                                     <tr>
-                                        <td>{{ $data->nama_pemesan }}</td>
-                                        <td>{{ $data->alamat }}</td>
-                                        <td>{{ $data->no_hp }}</td>
-                                        <td>
-                                            <a href="{{ route('pemesans.edit', $data->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <a href="{{ route('pemesans.show', $data->id) }}"
-                                                class="btn btn-info">Detail</a>
-                                            <form action="{{ route('pemesans.destroy', $data->id) }}" method="POST"
-                                                style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                                                    Hapus
-                                                </button>
-                                            </form>
-                                        </td>
+                                        <th>Nama Pemesan</th>
+                                        <th>Alamat</th>
+                                        <th>Nomor HP</th>
+                                        <th>Aksi</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{ $pemesan->appends(['search' => $search])->links() }}
+                                </thead>
+                                <tbody>
+                                    @foreach ($pemesan as $data)
+                                        <tr>
+                                            <td>{{ $data->nama_pemesan }}</td>
+                                            <td>{{ $data->alamat }}</td>
+                                            <td>{{ $data->no_hp }}</td>
+                                            <td>
+                                                <a href="{{ route('pemesans.edit', $data->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <a href="{{ route('pemesans.show', $data->id) }}"
+                                                    class="btn btn-info">Detail</a>
+                                                <form action="{{ route('pemesans.destroy', $data->id) }}"
+                                                    method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                                        Hapus
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{ $pemesan->appends(['search' => $search])->links() }}
+                        @endif
                     </div>
                 </div>
             </main>

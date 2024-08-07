@@ -22,7 +22,6 @@
                     </div>
                 @endif
 
-
                 <div class="row mt-4">
                     <div class="col-4">
                         <!-- Header dengan warna biru -->
@@ -58,48 +57,49 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Merk</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($merks as $data)
+                        @if ($merks->isEmpty())
+                            <div class="alert alert-warning" role="alert">
+                                Data tidak ditemukan.
+                            </div>
+                        @else
+                            <table class="table table-bordered">
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $data->nama_merk }}</td>
-                                        <td>
-                                            <a href="{{ route('merks.edit', $data->id) }}"
-                                                class="btn btn-warning">Edit</a>
-
-                                            <form action="{{ route('merks.destroy', $data->id) }}" method="POST"
-                                                style="display: inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Apakah anda yakin inggin menghapus merk ini')">
-                                                    Hapus
-                                                </button>
-                                            </form>
-                                        </td>
+                                        <th>No</th>
+                                        <th>Merk</th>
+                                        <th>Aksi</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{ $merks->appends(request()->input())->links() }}
+                                </thead>
+                                <tbody>
+                                    @foreach ($merks as $data)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $data->nama_merk }}</td>
+                                            <td>
+                                                <a href="{{ route('merks.edit', $data->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+
+                                                <form action="{{ route('merks.destroy', $data->id) }}" method="POST"
+                                                    style="display: inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Apakah anda yakin inggin menghapus merk ini')">
+                                                        Hapus
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{ $merks->appends(request()->input())->links() }}
+                        @endif
                     </div>
                 </div>
             </main>
         </div>
     </div>
-
-
-
-
-
 
     </div>
 </x-app-layout>

@@ -11,7 +11,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="d-flex">
                         <div class="p-2">
-                            <img id="imagePreview" src="{{ asset('storage/images/' . $mobil->gambar) }}"
+                            <img id="imagePreview" src="{{ asset('storage/public/images/mobils/' . $mobil->gambar) }}"
                                 alt="Preview image"
                                 style="display: {{ $mobil->gambar ? 'block' : 'none' }}; width: 200px;">
                         </div>

@@ -25,16 +25,6 @@
                     </div>
                 @endif
 
-                {{-- @if ($errors->any())
-                    <div class="alert alert-danger mt-3">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif --}}
-
                 <div class="row mt-4">
                     <div class="col-4">
                         <div class="mb-3">
@@ -150,54 +140,60 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        <table class="table table-bordered shadow">
-                            <thead>
-                                <tr>
-                                    <th>Mobil</th>
-                                    <th>Merk</th>
-                                    <th>Kursi</th>
-                                    <th class="detail-column">No Polisi</th>
-                                    <th class="detail-column">Tahun</th>
-                                    <th class="detail-column">Harga Per Hari</th>
-                                    <th class="detail-column">Gambar</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($mobil as $data)
+                        @if ($mobil->isEmpty())
+                            <div class="alert alert-warning" role="alert">
+                                Data tidak ditemukan.
+                            </div>
+                        @else
+                            <table class="table table-bordered shadow">
+                                <thead>
                                     <tr>
-                                        <td>{{ $data->nama_m }}</td>
-                                        <td>{{ $data->merk->nama_merk }}</td>
-                                        <td>{{ $data->kursi }}</td>
-                                        <td class="detail-column">{{ $data->no_polisi }}</td>
-                                        <td class="detail-column">{{ $data->tahun }}</td>
-                                        <td class="detail-column">{{ $data->harga_per_hari }}</td>
-                                        <td class="detail-column">
-                                            @if ($data->gambar)
-                                                <img src="{{ Storage::url('images/' . $data->gambar) }}"
-                                                    style="width: 50px;">
-                                            @else
-                                                Tidak ada gambar
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('mobils.edit', $data->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <a href="{{ route('mobils.show', $data->id) }}"
-                                                class="btn btn-info">Detail</a>
-                                            <form action="{{ route('mobils.destroy', $data->id) }}" method="POST"
-                                                style="display: inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger"
-                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini')">Hapus</button>
-                                            </form>
-                                        </td>
+                                        <th>Mobil</th>
+                                        <th>Merk</th>
+                                        <th>Kursi</th>
+                                        <th class="detail-column">No Polisi</th>
+                                        <th class="detail-column">Tahun</th>
+                                        <th class="detail-column">Harga Per Hari</th>
+                                        <th class="detail-column">Gambar</th>
+                                        <th>Aksi</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{ $mobil->appends(['search' => $search])->links() }}
+                                </thead>
+                                <tbody>
+                                    @foreach ($mobil as $data)
+                                        <tr>
+                                            <td>{{ $data->nama_m }}</td>
+                                            <td>{{ $data->merk->nama_merk }}</td>
+                                            <td>{{ $data->kursi }}</td>
+                                            <td class="detail-column">{{ $data->no_polisi }}</td>
+                                            <td class="detail-column">{{ $data->tahun }}</td>
+                                            <td class="detail-column">{{ $data->harga_per_hari }}</td>
+                                            <td class="detail-column">
+                                                @if ($data->gambar)
+                                                    <img src="{{ Storage::url('images/' . $data->gambar) }}"
+                                                        style="width: 50px;">
+                                                @else
+                                                    Tidak ada gambar
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('mobils.edit', $data->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <a href="{{ route('mobils.show', $data->id) }}"
+                                                    class="btn btn-info">Detail</a>
+                                                <form action="{{ route('mobils.destroy', $data->id) }}"
+                                                    method="POST" style="display: inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger"
+                                                        onclick="return confirm('Apakah anda yakin ingin menghapus data ini')">Hapus</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{ $mobil->appends(['search' => $search])->links() }}
+                        @endif
                     </div>
                 </div>
             </main>
@@ -237,6 +233,6 @@
                 preview.src = imageSrc;
                 preview.style.display = 'block';
             }
-        });
+        }); <<
     </script>
 </x-app-layout>
