@@ -25,7 +25,7 @@
                     </div>
                 @endif
 
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger mt-3">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -33,7 +33,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 <div class="row mt-4">
                     <div class="col-4">
@@ -128,7 +128,8 @@
                             <div class="mb-3">
                                 <label for="gambar" class="form-label">Gambar Mobil</label>
                                 <input type="file" name="gambar" onchange="previewImage()"
-                                    class="form-control @error('gambar') is-invalid @enderror" id="gambar">
+                                    class="form-control @error('gambar') is-invalid @enderror"
+                                    value="{{ old('gambar') }}" id="gambar">
                                 @error('gambar')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -226,7 +227,6 @@
             }
         }
 
-<<<<<<< HEAD
         // Tampilkan gambar saat halaman dimuat jika ada
         document.addEventListener('DOMContentLoaded', function() {
             const preview = document.getElementById('imagePreview');
@@ -238,15 +238,5 @@
                 preview.style.display = 'block';
             }
         });
-=======
-    //     function validateForm() {
-    //     var kursi = document.getElementById('kursi').value;
-    //     if (kursi <= 0) {
-    //         alert("Jumlah kursi tidak boleh 0 atau bilangan negatif.");
-    //         return false;
-    //     }
-    //     return true;
-    // }
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
     </script>
 </x-app-layout>

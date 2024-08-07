@@ -9,16 +9,22 @@
         <div class="flex-1 ml-64 p-4">
             <main class="container mx-auto">
                 <h1 class="h3">Pengembalian Mobil</h1>
+                <div class="mt-1 text-sm text-red-600">Denda keterlambatan per hari Rp 500.000
+                </div>
 
-                <div class="row">
-                    <div class="col-5">
+                <div class="row mt-3">
+                    <div class="col-6">
                         <form action="{{ route('pesanan.kembali', $pesanan->id) }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="denda">Denda:</label>
-                                <input type="number" id="denda" name="denda" class="form-control">
+                                <label for="kembali_sebenarnya" class="mt-3">Tanggal Kembali Sebenarnya</label>
+                                <input type="date" name="kembali_sebenarnya" id="kembali_sebenarnya"
+                                    class="form-control" required>
+                                @error('kembali_sebenarnya')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary mt-3">Kembalikan</button>
+                            <button type="submit" class="btn btn-primary mt-2">Kembalikan Mobil</button>
                         </form>
                     </div>
                 </div>

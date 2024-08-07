@@ -19,7 +19,9 @@
                                 <th>Mobil</th>
                                 <th>Pemesan</th>
                                 <th>Tanggal Pinjam</th>
-                                <th>Tanggal Kembali</th>
+                                <th>Tanggal Kembali Terjadwal</th>
+                                <th>Kembali Sebenarnya</th>
+                                <th>Keterlambatan (hari)</th>
                                 <th>Total Harga</th>
                                 <th>Denda</th>
                             </tr>
@@ -28,17 +30,33 @@
                             @foreach ($riwayat as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $data->mobil ? $data->mobil->nama_m : 'mobil tidak tersesia' }}</td>
-                                    <td>{{ $data->pemesan ? $data->pemesan->nama_pemesan : 'pemesan tidak tersedia' }}
+                                    <td>{{ $data->mobil ? $data->mobil->nama_m : 'Mobil tidak tersedia' }}</td>
+                                    <td>{{ $data->pemesan ? $data->pemesan->nama_pemesan : 'Pemesan tidak tersedia' }}
                                     </td>
-                                    <td>{{ $data->tanggal_mulai }}</td>
-                                    <td>{{ $data->tanggal_kembali }}</td>
-                                    <td>Rp{{ number_format($data->harga_total, 0, ',', '.') }}</td>
-                                    <td>Rp{{ number_format($data->denda, 0, ',', '.') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($data->tanggal_mulai)->format('d M Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($data->tanggal_kembali)->format('d M Y') }}</td>
+                                    <td>{{ $data->kembali_sebenarnya ? \Carbon\Carbon::parse($data->kembali_sebenarnya)->format('d M Y') : 'Belum Dikembalikan' }}
+                                    </td>
+                                    <td>
+                                        @if ($data->kembali_sebenarnya)
+                                            {{ $data->keterlambatan_hari > 0 ? $data->keterlambatan_hari : '-' }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>Rp {{ number_format($data->harga_total, 2, ',', '.') }}</td>
+                                    <td>
+                                        @if ($data->denda > 0)
+                                            Rp {{ number_format($data->denda, 2, ',', '.') }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </main>
         </div>

@@ -5,7 +5,7 @@
                 <x-application-logo class="block h-9 w-auto fill-current text-white" />
             </a>
         </div>
-<<<<<<< HEAD
+
 
 
         <p class="h5 mt-1 ml-4" style="font-weight: 900">
@@ -13,9 +13,8 @@
         </p>
         <div class="mt-4 space-y-1">
 
-=======
-        <div class="mt-10 space-y-1">
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
+
+
             <!-- Navigation Links -->
             <hr>
             <a href="{{ route('dashboard') }}"

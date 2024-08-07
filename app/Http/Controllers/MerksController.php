@@ -14,13 +14,13 @@ class MerksController extends Controller
     {
 
         $search = $request->input('search');
-    
-        $merks = Merk::when($search, function($query, $search) {
+
+        $merks = Merk::when($search, function ($query, $search) {
             return $query->where('nama_merk', 'like', '%' . $search . '%');
         })
-        ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
-        ->paginate(4);
-        
+            ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
+            ->paginate(4);
+
         return view('merks.index', compact('merks', 'search'));
     }
 
@@ -97,7 +97,7 @@ class MerksController extends Controller
 
         // cek apakah kategori sedang digunakan oleh mobil
         if ($merk->mobil()->exists()) {
-            return redirect()->back()->withErrors(['error' => 'Merk ini sedang digunakan di data mobil dan tidak bisa dihapus.']);
+            return redirect()->back()->with(['danger' => 'Merk ini sedang digunakan di data mobil dan tidak bisa dihapus.']);
         }
 
         // jika tidak digunakan hapus kategori

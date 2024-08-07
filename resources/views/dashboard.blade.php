@@ -1,10 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-<<<<<<< HEAD
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 ml-60 px-2 leading-tight">
-=======
+
+
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight ml-60 px-2">
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
+
             {{ __('Welcome Back') }}
         </h2>
     </x-slot>
@@ -12,7 +11,6 @@
     <div class="flex">
         <div class="flex-1 ml-64 p-3">
             <main class="container mx-auto">
-<<<<<<< HEAD
                 <p class="h3 mt-4">Rental Mobil</p>
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-12">
@@ -57,7 +55,7 @@
                                             <h6 class="card-subtitle mb-1 text-gray-600">Total Penyewa</h6>
                                             <p class="card-text mt-2 pl-8 text-2xl font-bold text-gray-800 ">
                                                 {{ $totalPenyewa }}</p>
-                                            <a href="{{ route('pemesans.index') }}" class="btn btn-primary mt-2">Lihat
+                                            <a href="{{ route('pesanan.index') }}" class="btn btn-primary mt-2">Lihat
                                                 Detail</a>
                                         </div>
                                     </div>
@@ -66,8 +64,7 @@
                         </div>
                     </div>
                 </div>
-=======
->>>>>>> 2efc6e6dcfb3a612d4f13e080ea961e9b08b4a00
+
             </main>
         </div>
     </div>

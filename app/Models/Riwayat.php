@@ -11,7 +11,7 @@ class Riwayat extends Model
     use SoftDeletes;
 
     protected $table = 'riwayats';
-    protected $fillable =  ['pemesan_id', 'mobil_id', 'tanggal_mulai', 'tanggal_kembali', 'harga_total', 'denda'];
+    protected $fillable =  ['pemesan_id', 'mobil_id', 'tanggal_mulai', 'tanggal_kembali', 'kembali_sebenarnya', 'harga_total', 'denda', 'keterlambatan_hari'];
 
     protected $dates = ['deleted_at'];
 

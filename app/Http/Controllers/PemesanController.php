@@ -134,10 +134,7 @@ class PemesanController extends Controller
 
         // Cek apakah pemesan memiliki pesanan yang sedang aktif
         if ($pemesan->pesanan()->exists()) {
-            return redirect()->route('pemesans.index')->withErrors(['error' => 'Pemesan ini sedang menyewa mobil dan tidak bisa dihapus.']);
-        }
-        if ($pemesan->riwayat()->exists()) {
-            return redirect()->route('pemesans.index')->withErrors(['error' => 'Pemesan ini memiliki data di history dan tidak bisa dihapus.']);
+            return redirect()->route('pemesans.index')->with(['error' => 'Pemesan ini sedang menyewa mobil dan tidak bisa dihapus.']);
         }
 
         // if ($pemesan->riwayat()->exists()) {
@@ -155,5 +152,4 @@ class PemesanController extends Controller
 
         return redirect()->route('pemesans.index')->with('danger', 'Data pemesan berhasil dihapus');
     }
-    
 }

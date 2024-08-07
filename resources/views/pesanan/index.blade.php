@@ -8,7 +8,7 @@
     <div class="flex">
         <div class="flex-1 ml-60 p-3">
             <main class="container mx-auto">
-                
+
                 @if (session()->has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ session('success') }}
@@ -19,15 +19,7 @@
                         {{ session('danger') }}
                     </div>
                 @endif
-                @if ($errors->any())
-                <div class="alert alert-danger mt-3">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
+
                 <div class="row mt-4">
                     <div class="col-7">
                         <!-- Header dengan warna biru -->
@@ -149,9 +141,9 @@
                                         <td>{{ $data->pemesan->nama_pemesan }}</td>
                                         <td>{{ $data->mobil->nama_m }}</td>
                                         <td>{{ $data->bayar->jenis_bayar }}</td>
-                                        <td>{{ $data->tanggal_mulai }}</td>
-                                        <td>{{ $data->tanggal_kembali }}</td>
-                                        <td>Rp.{{ $data->harga_total }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data->tanggal_mulai)->format('d M Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data->tanggal_kembali)->format('d M Y') }}</td>
+                                        <td>Rp {{ number_format($data->harga_total, 2, ',', '.') }}</td>
                                         <td>
                                             <a href="{{ route('pesanan.edit', $data->id) }}"
                                                 class="btn btn-warning">Edit</a>

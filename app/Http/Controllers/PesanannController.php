@@ -202,28 +202,49 @@ class PesanannController extends Controller
     {
         $pesanan = Pesanan::findOrFail($id);
 
-        // Validasi denda
+        // Validasi input
         $validateData = $request->validate([
-            'denda' => 'numeric|min:0',
+            'kembali_sebenarnya' => 'required|date|after_or_equal:tanggal_kembali',
         ], [
-            'denda.required' => 'Denda harus diisi',
-            'denda.numeric' => 'Denda harus berupa angka',
-            'denda.min' => 'Denda tidak boleh negatif',
+            'kembali_sebenarnya.required' => 'Tanggal kembali sebenarnya harus diisi',
+            'kembali_sebenarnya.date' => 'Tanggal kembali sebenarnya harus berupa tanggal yang valid',
+            'kembali_sebenarnya.after_or_equal' => 'Tanggal kembali sebenarnya tidak boleh sebelum tanggal kembali terjadwal',
         ]);
 
-        $denda = $validateData['denda'];
+        $kembaliSebenarnya = new Carbon($validateData['kembali_sebenarnya']);
+        $kembaliTerjadwal = new Carbon($pesanan->tanggal_kembali);
 
-        // Hitung harga total dengan denda
-        $hargaTotal = $pesanan->harga_total + $denda;
+        // // Debugging
+        // dd([
+        //     'kembali_sebenarnya' => $kembaliSebenarnya,
+        //     'tanggal_kembali' => $kembaliTerjadwal,
+        // ]);
 
-        // Buat entri riwayat
+        // Hitung keterlambatan
+        $terlambat = $kembaliSebenarnya->gt($kembaliTerjadwal) ? $kembaliSebenarnya->diffInDays($kembaliTerjadwal) : 0;
+
+        // Hitung denda
+        $dendaPerHari = 500000; // Sesuaikan dengan nilai denda per hari
+        $denda = $terlambat * $dendaPerHari;
+
+        // // Debugging
+        // dd([
+        //     'kembali_sebenarnya' => $kembaliSebenarnya,
+        //     'tanggal_kembali' => $kembaliTerjadwal,
+        //     'keterlambatan' => $terlambat,
+        //     'denda' => $denda
+        // ]);
+
+        // Buat entri riwayat dengan harga total yang diperbarui
         Riwayat::create([
             'pemesan_id' => $pesanan->pemesan_id,
             'mobil_id' => $pesanan->mobil_id,
             'tanggal_mulai' => $pesanan->tanggal_mulai,
-            'tanggal_kembali' => now(),
-            'harga_total' => $hargaTotal,
-            'denda' => $denda
+            'tanggal_kembali' => $kembaliTerjadwal,
+            'kembali_sebenarnya' => $kembaliSebenarnya,
+            'harga_total' => $pesanan->harga_total + $denda,
+            'denda' => $denda,
+            'keterlambatan_hari' => $terlambat,
         ]);
 
         // Hapus data pesanan
@@ -231,6 +252,7 @@ class PesanannController extends Controller
 
         return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dikembalikan dan denda telah ditambahkan');
     }
+
 
     public function formDenda($id)
     {
