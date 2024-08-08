@@ -94,11 +94,11 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        @if ($pemesan->isEmpty())
+                        @if (request()->has('search') && $pemesan->isEmpty())
                             <div class="alert alert-warning" role="alert">
                                 Data tidak ditemukan.
                             </div>
-                        @else
+                        @elseif ($pemesan->isNotEmpty())
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>

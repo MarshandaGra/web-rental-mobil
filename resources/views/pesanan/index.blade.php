@@ -33,11 +33,11 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        @if ($pesanan->isEmpty())
+                        @if (request()->has('search') && $pesanan->isEmpty())
                             <div class="alert alert-warning" role="alert">
-                            Data tidak ditemukan.
+                                Data tidak ditemukan.
                             </div>
-                        @else
+                        @elseif ($pesanan->isNotEmpty())
                         
                         <div class="col-7">
                             <div class="mb-3">

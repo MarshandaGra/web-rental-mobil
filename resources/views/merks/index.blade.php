@@ -57,11 +57,11 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        @if ($merks->isEmpty())
+                        @if (request()->has('search') && $merks->isEmpty())
                             <div class="alert alert-warning" role="alert">
                                 Data tidak ditemukan.
                             </div>
-                        @else
+                        @elseif ($merks->isNotEmpty())
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>

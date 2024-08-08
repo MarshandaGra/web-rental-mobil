@@ -50,11 +50,11 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        @if($bayar->isEmpty())
+                        @if (request()->has('search') && $bayar->isEmpty())
                             <div class="alert alert-warning" role="alert">
                                 Data tidak ditemukan.
                             </div>
-                        @else
+                        @elseif ($bayar->isNotEmpty())
                         <table class="table table-bordered shadow">
                             <thead>
                                 <tr>
