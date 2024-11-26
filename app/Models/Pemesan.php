@@ -11,7 +11,7 @@ class Pemesan extends Model
     use SoftDeletes;
     protected $table = 'pemesans';
 
-    protected $fillable = ['nama_pemesan', 'alamat', 'no_hp', 'alamat', 'image'];
+    protected $fillable = ['nama_pemesan', 'alamat', 'no_hp', 'alamat','nama_role', 'image'];
 
     protected $dates = ['deleted_at'];
 

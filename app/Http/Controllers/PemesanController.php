@@ -15,7 +15,8 @@ class PemesanController extends Controller
         $pemesan = Pemesan::when($search, function ($query, $search) {
             return $query->where('nama_pemesan', 'like', '%' . $search . '%')
                 ->orWhere('alamat', 'like', '%' . $search . '%')
-                ->orWhere('no_hp', 'like', '%' . $search . '%');
+                ->orWhere('no_hp', 'like', '%' . $search . '%')
+                ->orWhere('nama_role', 'like', '%' . $search . '%');
         })
             ->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
             ->paginate(4);
@@ -35,10 +36,13 @@ class PemesanController extends Controller
             'nama_pemesan' => 'required|unique:pemesans,nama_pemesan|max:255',
             'alamat' => 'required|max:255',
             'no_hp' => 'required|unique:pemesans,no_hp',
-            'image' => 'required|mimes:jpeg,jpg,png,svg|max:2048'
+            'nama_role' => 'required|max:255',
+            'image' => 'required|mimes:jpeg,jpg,png,svg|max:2048',
+            
         ], [
             'nama_pemesan.required' => 'Nama pemesan harus di isi',
             'nama_pemesan.unique' => 'Nama sudah terdaftar',
+            'nama_role.required' => 'Nama role harus di isi',
             'nama_pemesan.max' => 'Maximal karakter adalah 255',
             'alamat.required' => 'Alamat harus di isi',
             'alamat.max' => 'Maximal karakter adalah 255',
@@ -66,7 +70,9 @@ class PemesanController extends Controller
             'nama_pemesan' => $validateData['nama_pemesan'],
             'alamat' => $validateData['alamat'],
             'no_hp' => $validateData['no_hp'],
-            'image' => $data['image'] ?? null // Set null jika tidak ada gambar
+            'nama_role'=> $validateData['nama_role'],
+            'image' => $data['image'] ?? null, // Set null jika tidak ada gambar
+            
         ]);
 
 

@@ -55,7 +55,7 @@
                             <!-- Preview Gambar Pemesan -->
                             <div class="mb-3">
                                 <img id="imagePreview"
-                                    src="{{ $pemesan->image ? asset('storage/images/' . $pemesan->image) : '' }}"
+                                    src="{{ $pemesan->image ? asset('storage/public/images/pemesan/' . $pemesan->image) : '' }}"
                                     alt="Preview Image"
                                     style="display: {{ $pemesan->image ? 'block' : 'none' }}; width: 200px;">
                             </div>

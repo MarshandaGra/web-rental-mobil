@@ -33,4 +33,5 @@ class Mobil extends Model
     {
         return $this->hasMany(Riwayat::class);
     }
+
 }

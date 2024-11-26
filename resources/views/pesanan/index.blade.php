@@ -33,20 +33,13 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        @if (request()->has('search') && $pesanan->isEmpty())
-                            <div class="alert alert-warning" role="alert">
-                                Data tidak ditemukan.
-                            </div>
-                        @elseif ($pesanan->isNotEmpty())
-                        
                         <div class="col-7">
                             <div class="mb-3">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDataModal">
                                 <i class="fa-solid fa-plus"></i>
                                     <span>Tambah Data</span>
                                 </button>
-                        </div>
-
+                        </div>           
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="addDataModal" tabindex="-1"
                                                     aria-labelledby="addDataModalLabel" aria-hidden="true"
@@ -209,6 +202,11 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                        @if (request()->has('search') && $pesanan->isEmpty())
+                                            <div class="alert alert-warning" role="alert">
+                                                Data tidak ditemukan.
+                                            </div>
+                                        @elseif ($pesanan->isNotEmpty())
                                             {{ $pesanan->appends(['search' => $search])->links() }}
                                         @endif
                                     </div>

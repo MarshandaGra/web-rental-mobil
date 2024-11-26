@@ -140,11 +140,11 @@
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
                         </form>
-                        @if (request()->has('search') && $merks->isEmpty())
+                        @if (request()->has('search') && $mobil->isEmpty())
                             <div class="alert alert-warning" role="alert">
                                 Data tidak ditemukan.
                             </div>
-                        @elseif ($merks->isNotEmpty())
+                        @elseif ($mobil->isNotEmpty())
                             <table class="table table-bordered shadow">
                                 <thead>
                                     <tr>
@@ -223,16 +223,5 @@
             }
         }
 
-        // Tampilkan gambar saat halaman dimuat jika ada
-        document.addEventListener('DOMContentLoaded', function() {
-            const preview = document.getElementById('imagePreview');
-            const gambarInput = document.getElementById('gambar');
-            const imageSrc = gambarInput ? gambarInput.dataset.src : '';
-
-            if (imageSrc) {
-                preview.src = imageSrc;
-                preview.style.display = 'block';
-            }
-        }); <<
     </script>
 </x-app-layout>

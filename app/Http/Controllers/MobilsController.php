@@ -22,12 +22,6 @@ class MobilsController extends Controller
 
         $query = Mobil::query();
 
-        $mobil = Mobil::when($search, function ($query, $search) {
-            return $query->search($search);
-        })->orderBy('created_at', 'desc')  // Urutkan berdasarkan waktu penambahan
-            ->paginate(4);
-
-
         if ($trashed) {
             $query->withTrashed(); // Menyertakan data yang dihapus
         }
@@ -198,11 +192,6 @@ class MobilsController extends Controller
         if ($mobil->pesanan()->exists()) {
             return redirect()->back()->withErrors(['error' => 'Mobil ini sedang disewa dan tidak bisa dihapus']);
         }
-
-        // // Cek apakah mobil memiliki data riwayat
-        // if ($mobil->riwayat()->exists()) {
-        //     return redirect()->back()->withErrors(['error' => 'Mobil memiliki data riwayat dan tidak bisa dihapus']);
-        // }
 
         // Hapus gambar dari storage jika ada
         if ($mobil->gambar) {

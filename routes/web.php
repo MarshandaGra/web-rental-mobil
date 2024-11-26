@@ -1,14 +1,18 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CobaController;
+use App\Http\Controllers\BayarController;
 use App\Http\Controllers\MerksController;
 use App\Http\Controllers\MobilsController;
 use App\Http\Controllers\PemesanController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PesanannController;
 use App\Http\Controllers\PesanansController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Models\Mobil;
+use App\Models\merk;
 
 
 /*
@@ -26,6 +30,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
@@ -39,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('merks', MerksController::class);
     Route::resource('mobils', MobilsController::class);
     Route::resource('pemesans', PemesanController::class);
-
+    Route::resource('bayar', BayarController::class);
     // PESANAN
     Route::resource('pesanan', PesanannController::class);
     // route pengembalian
@@ -48,15 +53,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/riwayat', [PesanannController::class, 'riwayat'])->name('penyewaan.riwayat');
 });
 
-
-
-
-
-// // ROUTE MERK
-// Route::resource('merks', App\Http\Controllers\MerksController::class);
-
-// ROUTE BAYAR
-Route::resource('bayar', App\Http\Controllers\BayarController::class);
 
 
 

@@ -156,7 +156,7 @@ class PesanannController extends Controller
 
         // Validasi apakah mobil sudah dipinjam dalam rentang tanggal yang sama, kecuali untuk pesanan yang sedang diedit
         $conflict = Pesanan::where('mobil_id', $mobilId)
-            ->where('id', '<>', $pesanan->id)
+            ->where('id', '<>', $pesanan->id) //pesanan yang sedang di edit tidak termasuk dalam konflik
             ->where(function ($query) use ($tanggalMulai, $tanggalKembali) {
                 $query->whereBetween('tanggal_mulai', [$tanggalMulai, $tanggalKembali])
                     ->orWhereBetween('tanggal_kembali', [$tanggalMulai, $tanggalKembali])
@@ -214,11 +214,6 @@ class PesanannController extends Controller
         $kembaliSebenarnya = new Carbon($validateData['kembali_sebenarnya']);
         $kembaliTerjadwal = new Carbon($pesanan->tanggal_kembali);
 
-        // // Debugging
-        // dd([
-        //     'kembali_sebenarnya' => $kembaliSebenarnya,
-        //     'tanggal_kembali' => $kembaliTerjadwal,
-        // ]);
 
         // Hitung keterlambatan
         $terlambat = $kembaliSebenarnya->gt($kembaliTerjadwal) ? $kembaliSebenarnya->diffInDays($kembaliTerjadwal) : 0;
@@ -226,14 +221,6 @@ class PesanannController extends Controller
         // Hitung denda
         $dendaPerHari = 500000; // Sesuaikan dengan nilai denda per hari
         $denda = $terlambat * $dendaPerHari;
-
-        // // Debugging
-        // dd([
-        //     'kembali_sebenarnya' => $kembaliSebenarnya,
-        //     'tanggal_kembali' => $kembaliTerjadwal,
-        //     'keterlambatan' => $terlambat,
-        //     'denda' => $denda
-        // ]);
 
         // Buat entri riwayat dengan harga total yang diperbarui
         Riwayat::create([
@@ -262,15 +249,12 @@ class PesanannController extends Controller
 
     public function riwayat()
     {
-        // // Ambil data riwayat dengan relasi mobil dan customer
-        // $riwayat = Riwayat::withTrashed(['pemesan', 'mobil'])->get();
-
         $riwayat = Riwayat::with([
             'pemesan' => function ($query) {
-                $query->withTrashed();
+                $query->withTrashed(); //mengambil record yang telah di-soft delete bersama dengan yang aktif.
             },
             'mobil' => function ($query) {
-                $query->withTrashed();
+                $query->withTrashed(); //Memuat record mobil yang telah di-soft delete.
             }
         ])->get();
 

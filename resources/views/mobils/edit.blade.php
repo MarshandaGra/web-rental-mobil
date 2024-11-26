@@ -98,7 +98,7 @@
                             <!-- Preview Image -->
                             <div class="mb-3">
                                 <img id="imagePreview"
-                                    src="{{ $mobil->gambar ? asset('storage/images/' . $mobil->gambar) : '' }}"
+                                    src="{{ $mobil->gambar ? asset('storage/public/images/mobils/'. $mobil->gambar) : '' }}"
                                     alt="Preview Gambar"
                                     style="display: {{ $mobil->gambar ? 'block' : 'none' }}; width: 200px;">
                             </div>

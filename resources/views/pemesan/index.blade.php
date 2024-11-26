@@ -63,6 +63,25 @@
                                     </div>
                                 @enderror
                             </div>
+                            <!-- <div class="mb-3">
+                                <form>
+                                    <input type="radio" id="pengguna" name="nama_role" value="pengguna">
+                                    <label for="pengguna">pengguna</label><br>
+                                    <input type="radio" id="penyewa" name="nama_role" value="penyewa">
+                                    <label for="penyewa">penyewa</label><br>
+                                </form>
+                            </div> -->
+                            <div class="mb-3">
+                                <label for="nama_role" class="form-label">Nama Role</label>
+                                <input type="text" name="nama_role"
+                                    class="form-control @error('nama_role') is-invalid @enderror" id="nama_role"
+                                    placeholder="Masukkan role">
+                                @error('nama_role')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
                             <div class="mb-3">
                                 <img id="imagePreview" src="" alt="Preview Gambar"
@@ -88,11 +107,15 @@
                             <h4 class="bg-secondary text-white p-2 rounded">Data Pemesan</h4>
                         </div>
                         <form method="GET" action="{{ route('pemesans.index') }}">
+                            
+                        
                             <div class="input-group mb-3">
                                 <input type="text" name="search" class="form-control mr-2 rounded shadow"
                                     placeholder="Cari Pemesan..." value="{{ $search }}">
                                 <button class="btn btn-outline-secondary rounded shadow" type="submit">Cari</button>
                             </div>
+
+                            
                         </form>
                         @if (request()->has('search') && $pemesan->isEmpty())
                             <div class="alert alert-warning" role="alert">
@@ -105,6 +128,7 @@
                                         <th>Nama Pemesan</th>
                                         <th>Alamat</th>
                                         <th>Nomor HP</th>
+                                        <th>Role</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -114,6 +138,7 @@
                                             <td>{{ $data->nama_pemesan }}</td>
                                             <td>{{ $data->alamat }}</td>
                                             <td>{{ $data->no_hp }}</td>
+                                            <td>{{ $data->nama_role }}</td>
                                             <td>
                                                 <a href="{{ route('pemesans.edit', $data->id) }}"
                                                     class="btn btn-warning">Edit</a>
